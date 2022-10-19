@@ -1,4 +1,5 @@
-# CoreDataPlus
+# CoreDataPlus ![](https://img.shields.io/badge/-Early%20Access-blue)
+
 Lightweight Active-record-ish pattern.
 
 ☁️ Works great with, or without, CloudKit.
@@ -199,3 +200,11 @@ struct ContentView: View {
     }
 }
 ```
+
+
+## Todo
+- [ ] Unit tests
+- [ ] Example app
+- [ ] Option to disable automatic saving when using `destroyAll`
+- [ ] Have an idea? Open an issue!
+
