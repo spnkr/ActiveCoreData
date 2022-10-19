@@ -3,6 +3,7 @@ import CoreData
 
 
 public protocol CoreDataDeletable {
+  /// Removes all objects from the context, and saves the context.
   static func destroyAll(context: NSManagedObjectContext)
 }
 
