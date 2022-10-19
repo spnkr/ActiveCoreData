@@ -16,10 +16,10 @@ import CoreDataPlus
 // An existing NSManagedObject
 public class Drawing: NSManagedObject { }
 
-extension Drawing: CoreDataDeletable,
-                   CoreDataCountable,
-                   CoreDataSearchable,
-                   FindOrCreatableBy {
+extension Drawing: ManagedObjectDeletable,
+                   ManagedObjectCountable,
+                   ManagedObjectSearchable,
+                   ManagedObjectFindOrCreateBy {
                    
 }
 ```

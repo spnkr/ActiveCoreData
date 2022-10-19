@@ -1,18 +1,18 @@
-import Foundation
 import CoreData
+import Foundation
 
-public protocol CoreDataSearchable where Self: NSFetchRequestResult {
+public protocol ManagedObjectSearchable where Self: NSFetchRequestResult {
     init(context: NSManagedObjectContext)
-    
+
     static func entity() -> NSEntityDescription
     static func fetchRequest() -> NSFetchRequest<NSFetchRequestResult>
 }
 
-public extension CoreDataSearchable {
-    static func searchFor(_ predicate: NSPredicate?, context:NSManagedObjectContext) -> [Self] {
+public extension ManagedObjectSearchable {
+    static func searchFor(_ predicate: NSPredicate?, context: NSManagedObjectContext) -> [Self] {
         let request = NSFetchRequest<Self>()
         request.predicate = predicate
-        request.entity = self.entity()
+        request.entity = entity()
         return (try? context.fetch(request)) ?? []
     }
 }
