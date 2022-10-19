@@ -3,7 +3,9 @@
 Lightweight Active-record-ish pattern.
 
 ☁️ Works great with, or without, CloudKit.
+
 ✅ Manage your `NSManagedObjectContext`(s) however you want.
+
 👨‍💻 Works with automatic or manual `NSManagedObject` code generation.
 
 ## Installation
