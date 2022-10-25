@@ -9,10 +9,15 @@ public protocol ManagedObjectSearchable where Self: NSFetchRequestResult {
 }
 
 public extension ManagedObjectSearchable {
-    static func searchFor(_ predicate: NSPredicate?, context: NSManagedObjectContext) -> [Self] {
+    static func searchFor(_ predicate: NSPredicate?, sortBy: [NSSortDescriptor]? = nil, context: NSManagedObjectContext) -> [Self] {
         let request = NSFetchRequest<Self>()
         request.predicate = predicate
         request.entity = entity()
+        
+        if let sortBy = sortBy {
+            request.sortDescriptors = sortBy
+        }
+        
         return (try? context.fetch(request)) ?? []
     }
 }
