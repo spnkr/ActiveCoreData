@@ -15,29 +15,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        // create some authors
-        // using the name field as the unique identifier
-        // TODO: HANDLE ID/IDENTIFIABLE
-        let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami", context: viewContext)
-        let jk = Author.findOrCreate(column: "name", value: "J. K. Rowling", context: viewContext)
         
-        // using id as the unique identifier
-        let lydia = Author.findOrCreate(id: "1234", context: viewContext)
-        lydia.name = "Lydia Millet"
-        
-        var authors = [murakami, jk, lydia]
-        
-        for _ in 0..<10 {
-            let newItem = Book.findOrCreate(id: UUID().uuidString, context: viewContext)
-            newItem.title = "Harry Potter Vol. \(Int.random(in: 1...1000))"
-            
-            newItem.addToAuthors(authors.randomElement()!)
-            
-            // add a 2nd author to some books
-            if Int.random(in: 1...100) > 50 {
-                newItem.addToAuthors(authors.randomElement()!)
-            }
-        }
         
         try! viewContext.save()
         

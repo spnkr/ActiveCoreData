@@ -71,7 +71,6 @@
 				BED50E1C2909B37100B7C6C5 /* Persistence.swift */,
 				BED50E272909B50200B7C6C5 /* Book.swift */,
 				BED50E292909B50800B7C6C5 /* Author.swift */,
-				BED50E262909B4F900B7C6C5 /* New Group */,
 				BED50E1E2909B37100B7C6C5 /* Example_App.xcdatamodeld */,
 				BED50E192909B37100B7C6C5 /* Preview Content */,
 			);
@@ -84,13 +83,6 @@
 				BED50E1A2909B37100B7C6C5 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		BED50E262909B4F900B7C6C5 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		BED50E2B2909B87500B7C6C5 /* Frameworks */ = {
