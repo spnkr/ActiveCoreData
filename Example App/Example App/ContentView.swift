@@ -103,6 +103,7 @@ struct ContentView: View {
             }
             Text("Select an item")
         }
+        .navigationViewStyle(.stack)
     }
     
     private func addTestData() {
