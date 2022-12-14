@@ -10,11 +10,11 @@ Lightweight Active-record-ish pattern.
 
 # Contents
 
-[Installation](#installation)
-[Example App](#example-App)
-[Documentation](#documentation)
-[Logging](#logging)
-[Quick Start with SwiftUI](#quick-start-with-swiftui)
+- [Installation](#installation)
+- [Example App](#example-app)
+- [Documentation](#documentation)
+- [Logging](#logging)
+- [Quick Start with SwiftUI](#quick-start-with-swiftui)
 
 # Installation
 
@@ -221,7 +221,6 @@ struct ContentView: View {
 
 ## Todo
 - [ ] Unit tests
-- [ ] Example app
 - [ ] Option to disable automatic saving when using `destroyAll`
 - [ ] Have an idea? Open an issue!
 
