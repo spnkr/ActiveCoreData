@@ -8,7 +8,15 @@ Lightweight Active-record-ish pattern.
 
 👨‍💻 Works with automatic or manual `NSManagedObject` code generation.
 
-## Installation
+# Contents
+
+[Installation](#installation)
+[Example App](#example-App)
+[Documentation](#documentation)
+[Logging](#logging)
+[Quick Start with SwiftUI](#quick-start-with-swiftui)
+
+# Installation
 
 ```swift
 import CoreDataPlus
@@ -24,7 +32,14 @@ extension Drawing: ManagedObjectDeletable,
 }
 ```
 
+# Example App
+
+Open `Example App/Example App.xcodeproj`.
+
+<img src="https://user-images.githubusercontent.com/11250/207498227-0009e1e4-4201-449a-b205-d9b9cae78f89.png" height="200" />
     
+# Documentation
+
 ## `Predicate`
 
 Adds a new, more concise, initializer for `NSPredicate`. Aliased as `Predicate`.
