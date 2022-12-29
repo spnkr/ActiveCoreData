@@ -24,6 +24,14 @@ import CoreDataPlus
 // An existing NSManagedObject
 public class Drawing: NSManagedObject { }
 
+extension Drawing: ManagedObjectPlus {
+                   
+}
+```
+
+You can also import just the features you want to use by replacing `ManagedObjectPlus` with one or more of the available `ManagedObject*` protocols:
+
+```swift
 extension Drawing: ManagedObjectDeletable,
                    ManagedObjectCountable,
                    ManagedObjectSearchable,
