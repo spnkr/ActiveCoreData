@@ -66,8 +66,8 @@ NSPredicate(format:"color = %@ and city = %@", argumentArray:["Blue", city])
 
 
 
-
-## `findOrCreate`
+## 'NSManagedObject' Extensions
+### `findOrCreate`
 
 Finds an instance of the `NSManagedObject` that has a column (property) matching the passed value. If it doesn't exist in the database, creates one, and returns it.
 
@@ -88,7 +88,7 @@ let d = Drawing.findOrCreate(id: "123", context: viewContext)
 *Tip: If you're using SwiftUI, adding a `String` column `id` plays nicely with `Identifiable`*
 
 
-## `findButDoNotCreate`
+### `findButDoNotCreate`
 
 Same as `findOrCreate`, but returns `nil` if there is no object in the database.
 
@@ -99,7 +99,7 @@ if let d = Drawing.findButDoNotCreate(id: "10001", context: viewContext) {
 }
 ```
 
-## `countFor`
+### `countFor`
 
 Gets a count of objects matching the passed `Predicate`
 
@@ -107,7 +107,7 @@ Gets a count of objects matching the passed `Predicate`
 let count = Drawing.countFor(Predicate("someField = %@", true), context: viewContext)
 ```
 
-## `searchFor`
+### `searchFor`
 
 Gets all objects matching the passed `Predicate`
 
@@ -122,7 +122,7 @@ for drawing in results {
 ```
 
 
-## `destroyAll`
+### `destroyAll`
 
 Removes all objects from Core Data.
 *Deletes them from the context, and saves the context.*
@@ -230,5 +230,6 @@ struct ContentView: View {
 ## Todo
 - [ ] Unit tests
 - [ ] Option to disable automatic saving when using `destroyAll`
+- [ ] Add docs on `NSPersistentContainer` agnosticity
 - [ ] Have an idea? Open an issue!
 
