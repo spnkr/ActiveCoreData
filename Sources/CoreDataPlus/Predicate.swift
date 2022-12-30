@@ -18,10 +18,10 @@ public extension NSPredicate {
     convenience init(_ string: String, _ args: Any?...) {
         self.init(format:string, argumentArray:args as [Any])
     }
-}
-
-public extension NSSortDescriptor {
-    convenience init<Root, Value>(_ keyPath: KeyPath<Root, Value>) {
-        self.init(keyPath: keyPath, ascending: true)
+    
+    /// A predicate that matches every object.
+    /// Easier than having to write conditions for 'if the predicate is nil'.
+    static func empty() -> NSPredicate {
+        Predicate("1 = 1")
     }
 }
