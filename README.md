@@ -13,6 +13,8 @@ Lightweight Active-record-ish pattern.
 - [Installation](#installation)
 - [Example App](#example-app)
 - [Documentation](#documentation)
+    - [Predicate](#predicate)
+    - [`NSManagedObject` Extensions](#nsmanagedobject-extensions)
 - [Logging](#logging)
 - [Quick Start with SwiftUI](#quick-start-with-swiftui)
 
@@ -64,9 +66,21 @@ Instead of
 NSPredicate(format:"color = %@ and city = %@", argumentArray:["Blue", city])
 ```
 
+### `empty()`
+
+Returns a new, non-nil, `NSPredicate` object that will match every single row in the database.
+
+> This is especially helpful with:
+> 1. The [@FetchRequest property wrapper](https://developer.apple.com/documentation/swiftui/fetchrequest). Using a nil predicate can cause unexpected behavior if you dynamically assign or edit the predicate at runtime.
+> 2. Other Core Data quirks around nil predicates and updating when you do fancy stuff.
+> 
+> Before: `@FetchRequest(sortDescriptors: [], predicate: nil)`
+> After: `@FetchRequest(sortDescriptors: [], predicate: Predicate.empty())`
 
 
-## 'NSManagedObject' Extensions
+
+
+## `NSManagedObject` Extensions
 ### `findOrCreate`
 
 Finds an instance of the `NSManagedObject` that has a column (property) matching the passed value. If it doesn't exist in the database, creates one, and returns it.
