@@ -13,6 +13,12 @@ public protocol ManagedObjectFindOrCreateBy where Self: NSFetchRequestResult {
 }
 
 public extension ManagedObjectFindOrCreateBy {
+    /// Finds an instance of the NSManagedObject that has a column (property) matching the passed value. If it doesn't exist in the database, creates one, and returns it.
+    /// - Parameters:
+    ///   - column: Name of column that uniquely identifies a row (primary key).
+    ///   - value: Value of the primary key.
+    ///   - context: NSManagedObjectContext to use
+    /// - Returns: An instance of the object
     static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
         
         if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
