@@ -13,15 +13,18 @@ public protocol ManagedObjectFindOrCreateBy where Self: NSFetchRequestResult {
 }
 
 public extension ManagedObjectFindOrCreateBy {
-    static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
-        // TODO: log developer errors as warnings:
-        // dump(entity().attributesByName["id"]!.type == NSAttributeDescription.AttributeType.string)
-        // entity().attributesByName["idx"]?.type
+    static func findOrCreate(id: String, using: ContextMode = .foreground) -> Self {
+        
+        if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
+            fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
+        }
 
-        findOrCreate(column: "id", value: id, context: context)
+        return findOrCreate(column: "id", value: id, using: using)
     }
 
-    static func findOrCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self {
+    static func findOrCreate(column: String, value: Any, using: ContextMode = .foreground) -> Self {
+        let context = contextModeToNSManagedObjectContext(using)
+        
         let request = NSFetchRequest<Self>()
         request.predicate = Predicate("\(column) = %@", value)
         request.entity = entity()
@@ -33,7 +36,7 @@ public extension ManagedObjectFindOrCreateBy {
                 return object
             }
         } catch {
-            CoreDataLogger.shared.log("findOrCreate context fetch failure: \(error.localizedDescription)")
+            CoreDataPlusLogger.shared.log("findOrCreate context fetch failure: \(error.localizedDescription)")
         }
 
         let object = Self(context: context)
@@ -45,15 +48,17 @@ public extension ManagedObjectFindOrCreateBy {
         return object
     }
 
-    static func findButDoNotCreate(id: String, context: NSManagedObjectContext) -> Self? {
-        // TODO: log developer errors as warnings:
-        // dump(entity().attributesByName["id"]!.type == NSAttributeDescription.AttributeType.string)
-        // entity().attributesByName["idx"]?.type
-
-        findButDoNotCreate(column: "id", value: id, context: context)
+    static func findButDoNotCreate(id: String, using: ContextMode = .foreground) -> Self? {
+        if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
+            fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
+        }
+        
+        return findButDoNotCreate(column: "id", value: id, using: using)
     }
 
-    static func findButDoNotCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self? {
+    static func findButDoNotCreate(column: String, value: Any, using: ContextMode = .foreground) -> Self? {
+        let context = contextModeToNSManagedObjectContext(using)
+        
         let request = NSFetchRequest<Self>()
         request.predicate = Predicate("\(column) = %@", value)
         request.fetchLimit = 1
@@ -66,7 +71,7 @@ public extension ManagedObjectFindOrCreateBy {
                 return object
             }
         } catch {
-            CoreDataLogger.shared.log("FindButDoNotCreateById context fetch failure: \(error.localizedDescription)")
+            CoreDataPlusLogger.shared.log("FindButDoNotCreateById context fetch failure: \(error.localizedDescription)")
         }
 
         return nil

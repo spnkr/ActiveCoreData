@@ -150,10 +150,10 @@ Drawing.destroyAll(context: viewContext)
 
 ## Logging
 
-By default, log messages do not appear. To take action when there's a problem, use `CoreDataLogger.configure(...)`
+By default, log messages do not appear. To take action when there's a problem, use `CoreDataPlus.Logger.configure(...)`
 
 ```swift
-CoreDataLogger.configure(logHandler: { message in
+CoreDataPlus.Logger.configure(logHandler: { message in
     print("A log message from the data layer: \(message)")
 })
 ```
@@ -184,7 +184,7 @@ import CoreDataPlus
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        CoreDataLogger.configure(logHandler: { message in
+        CoreDataPlus.Logger.configure(logHandler: { message in
             print("A log message from the data layer: \(message)")
         })
         

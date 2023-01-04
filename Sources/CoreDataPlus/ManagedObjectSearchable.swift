@@ -12,7 +12,9 @@ public extension ManagedObjectSearchable {
     static func searchFor(_ predicate: NSPredicate?,
                           sortBy: [NSSortDescriptor]? = nil,
                           limit: Int? = nil,
-                          context: NSManagedObjectContext) -> [Self] {
+                          using: ContextMode) -> [Self] {
+        let context = contextModeToNSManagedObjectContext(using)
+        
         let request = NSFetchRequest<Self>()
         request.predicate = predicate
         request.entity = entity()

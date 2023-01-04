@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE33D3972964F4F600736CA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE33D3962964F4F600736CA7 /* AppDelegate.swift */; };
 		BEFA11F929491832001DE330 /* Example_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11F829491832001DE330 /* Example_AppApp.swift */; };
 		BEFA11FB29491832001DE330 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11FA29491832001DE330 /* ContentView.swift */; };
 		BEFA11FD29491832001DE330 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEFA11FC29491832001DE330 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE33D3962964F4F600736CA7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEFA11F529491832001DE330 /* Example App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFA11F829491832001DE330 /* Example_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_AppApp.swift; sourceTree = "<group>"; };
 		BEFA11FA29491832001DE330 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				BEFA121829491916001DE330 /* Author.swift */,
 				BEFA121629491915001DE330 /* Book.swift */,
 				BEFA121729491916001DE330 /* BookDetailView.swift */,
+				BE33D3962964F4F600736CA7 /* AppDelegate.swift */,
 				BEFA11F829491832001DE330 /* Example_AppApp.swift */,
 				BEFA11FA29491832001DE330 /* ContentView.swift */,
 				BEFA11FC29491832001DE330 /* Assets.xcassets */,
@@ -175,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE33D3972964F4F600736CA7 /* AppDelegate.swift in Sources */,
 				BEFA120529491832001DE330 /* Example_App.xcdatamodeld in Sources */,
 				BEFA120229491832001DE330 /* Persistence.swift in Sources */,
 				BEFA11FB29491832001DE330 /* ContentView.swift in Sources */,

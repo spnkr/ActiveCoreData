@@ -27,7 +27,7 @@ struct BookDetailView: View {
                 
                 VStack(spacing: 100) {
                     Button("Add author\nHaruki Murakami", action: {
-                        let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami", context: viewContext)
+                        let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami")
                         book.addToAuthors(murakami)
                     })
                     .buttonStyle(.bordered)
@@ -39,17 +39,17 @@ struct BookDetailView: View {
                             "Lydia Millet"
                         ]
                         
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: names.randomElement()!, context: viewContext))
+                        book.addToAuthors(Author.findOrCreate(column: "name", value: names.randomElement()!))
                     })
                     .buttonStyle(.bordered)
                     
                     Button("Add new fictional author", action: {
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))", context: viewContext))
+                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))"))
                     })
                     .buttonStyle(.bordered)
                     
                     Button("Add new fictional author", action: {
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))", context: viewContext))
+                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))"))
                     })
                     .buttonStyle(.bordered)
                 }
