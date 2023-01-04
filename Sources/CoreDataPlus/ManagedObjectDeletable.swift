@@ -3,15 +3,17 @@ import Foundation
 
 public protocol ManagedObjectDeletable {
     /// Removes all objects from the context, and saves the context.
-    static func destroyAll(using: ContextMode, saveAfter: Bool, wrapInContextPerformBlock: Bool)
+    static func destroyAll(context: NSManagedObjectContext, saveAfter: Bool, wrapInContextPerformBlock: Bool)
 }
 
 public extension ManagedObjectDeletable {
     
-    static func destroyAll(using: ContextMode = .foreground, saveAfter: Bool = true, wrapInContextPerformBlock: Bool = true) {
-        let context = contextModeToNSManagedObjectContext(using)
-        
-        context.perform {
+    static func destroyAll(context: NSManagedObjectContext, saveAfter: Bool = true, wrapInContextPerformBlock: Bool = true) {
+        if wrapInContextPerformBlock {
+            context.perform {
+                _destroyAll(context: context, saveAfter: saveAfter)
+            }
+        } else {
             _destroyAll(context: context, saveAfter: saveAfter)
         }
     }

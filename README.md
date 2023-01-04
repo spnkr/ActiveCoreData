@@ -1,3 +1,5 @@
+### ⚠️ Read me out of date in this branch
+
 # CoreDataPlus ![](https://img.shields.io/badge/-Early%20Access-blue)
 
 Lightweight Active-record-ish pattern.

@@ -2,7 +2,6 @@
 
 import Foundation
 import SwiftUI
-import CoreData
 import CoreDataPlus
 
 struct BookDetailView: View {
@@ -27,7 +26,7 @@ struct BookDetailView: View {
                 
                 VStack(spacing: 100) {
                     Button("Add author\nHaruki Murakami", action: {
-                        let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami")
+                        let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami", context: viewContext)
                         book.addToAuthors(murakami)
                     })
                     .buttonStyle(.bordered)
@@ -44,12 +43,12 @@ struct BookDetailView: View {
                     .buttonStyle(.bordered)
                     
                     Button("Add new fictional author", action: {
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))"))
+                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))", context: viewContext))
                     })
                     .buttonStyle(.bordered)
                     
                     Button("Add new fictional author", action: {
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))"))
+                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))", context: viewContext))
                     })
                     .buttonStyle(.bordered)
                 }

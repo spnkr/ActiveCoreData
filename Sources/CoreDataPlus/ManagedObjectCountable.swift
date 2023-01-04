@@ -9,8 +9,7 @@ public protocol ManagedObjectCountable where Self: NSFetchRequestResult {
 }
 
 public extension ManagedObjectCountable {
-    static func countFor(_ predicate: NSPredicate?, using: ContextMode) -> Int {
-        let context = contextModeToNSManagedObjectContext(using)
+    static func countFor(_ predicate: NSPredicate?, context: NSManagedObjectContext) -> Int {
         
         let request = NSFetchRequest<Self>()
         request.predicate = predicate

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE2C06982965098300C7A17D /* SyntacticSugar in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C06972965098300C7A17D /* SyntacticSugar */; };
+		BE2C069A29650C4900C7A17D /* CoreDataPlusSyntacticSugar in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C069929650C4900C7A17D /* CoreDataPlusSyntacticSugar */; };
 		BE33D3972964F4F600736CA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE33D3962964F4F600736CA7 /* AppDelegate.swift */; };
 		BEFA11F929491832001DE330 /* Example_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11F829491832001DE330 /* Example_AppApp.swift */; };
 		BEFA11FB29491832001DE330 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11FA29491832001DE330 /* ContentView.swift */; };
@@ -41,8 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE2C06982965098300C7A17D /* SyntacticSugar in Frameworks */,
 				BEFA1215294918B3001DE330 /* CoreDataPlus in Frameworks */,
+				BE2C069A29650C4900C7A17D /* CoreDataPlusSyntacticSugar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +125,7 @@
 			name = "Example App";
 			packageProductDependencies = (
 				BEFA1214294918B3001DE330 /* CoreDataPlus */,
-				BE2C06972965098300C7A17D /* SyntacticSugar */,
+				BE2C069929650C4900C7A17D /* CoreDataPlusSyntacticSugar */,
 			);
 			productName = "Example App";
 			productReference = BEFA11F529491832001DE330 /* Example App.app */;
@@ -391,9 +391,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BE2C06972965098300C7A17D /* SyntacticSugar */ = {
+		BE2C069929650C4900C7A17D /* CoreDataPlusSyntacticSugar */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SyntacticSugar;
+			productName = CoreDataPlusSyntacticSugar;
 		};
 		BEFA1214294918B3001DE330 /* CoreDataPlus */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 import CoreDataPlus
-import SyntacticSugar
+import CoreDataPlusSyntacticSugar
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
