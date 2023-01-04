@@ -13,18 +13,16 @@ public protocol ManagedObjectFindOrCreateBy where Self: NSFetchRequestResult {
 }
 
 public extension ManagedObjectFindOrCreateBy {
-    static func findOrCreate(id: String, using: ContextMode = .foreground) -> Self {
+    static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
         
         if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
             fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
         }
 
-        return findOrCreate(column: "id", value: id, using: using)
+        return findOrCreate(column: "id", value: id, context: context)
     }
 
-    static func findOrCreate(column: String, value: Any, using: ContextMode = .foreground) -> Self {
-        let context = contextModeToNSManagedObjectContext(using)
-        
+    static func findOrCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self {
         let request = NSFetchRequest<Self>()
         request.predicate = Predicate("\(column) = %@", value)
         request.entity = entity()
@@ -48,16 +46,15 @@ public extension ManagedObjectFindOrCreateBy {
         return object
     }
 
-    static func findButDoNotCreate(id: String, using: ContextMode = .foreground) -> Self? {
+    static func findButDoNotCreate(id: String, context: NSManagedObjectContext) -> Self? {
         if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
             fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
         }
         
-        return findButDoNotCreate(column: "id", value: id, using: using)
+        return findButDoNotCreate(column: "id", value: id, context: context)
     }
 
-    static func findButDoNotCreate(column: String, value: Any, using: ContextMode = .foreground) -> Self? {
-        let context = contextModeToNSManagedObjectContext(using)
+    static func findButDoNotCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self? {
         
         let request = NSFetchRequest<Self>()
         request.predicate = Predicate("\(column) = %@", value)

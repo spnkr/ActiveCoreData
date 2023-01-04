@@ -11,6 +11,7 @@ let package = Package(
         .library(
             name: "CoreDataPlus",
             targets: ["CoreDataPlus"]),
+        .library(name: "SyntacticSugar", targets: ["SyntacticSugar"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -22,6 +23,9 @@ let package = Package(
         .target(
             name: "CoreDataPlus",
             dependencies: []),
+        .target(
+            name: "SyntacticSugar",
+            dependencies: ["CoreDataPlus"]),
         .testTarget(
             name: "CoreDataPlusTests",
             dependencies: ["CoreDataPlus"]),

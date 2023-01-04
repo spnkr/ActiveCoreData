@@ -39,7 +39,7 @@ struct BookDetailView: View {
                             "Lydia Millet"
                         ]
                         
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: names.randomElement()!))
+                        book.addToAuthors(Author.findOrCreate(column: "name", value: names.randomElement()!, context: viewContext))
                     })
                     .buttonStyle(.bordered)
                     
