@@ -5,12 +5,12 @@ import PackageDescription
 
 let package = Package(
     name: "CoreDataPlus",
-    platforms: [.macOS(.v12), .iOS(.v15), .tvOS(.v11), .watchOS(.v5)],
+    platforms: [.iOS(.v15)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "CoreDataPlus",
-            targets: ["CoreDataPlus"])
+            targets: ["CoreDataPlus"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -24,8 +24,7 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "CoreDataPlusTests",
-            dependencies: ["CoreDataPlus"]),
-    ],
-    swiftLanguageVersions: [.v5]
+            dependencies: ["CoreDataPlus"],
+            resources: [.copy("Data Models")]),
+    ]
 )
-

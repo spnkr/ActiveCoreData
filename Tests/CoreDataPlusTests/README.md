@@ -1,0 +1,1 @@
+To generate .momd files, run `Scripts/gen_momd_files.sh`
