@@ -2,7 +2,6 @@
 
 import Foundation
 import SwiftUI
-import CoreData
 import CoreDataPlus
 
 struct BookDetailView: View {
