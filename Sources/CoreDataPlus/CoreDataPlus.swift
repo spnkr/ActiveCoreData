@@ -1,5 +1,0 @@
-public struct CoreDataPlus {
-    public private(set) var text = "Hello, World!"
-
-    public init() { }
-}
