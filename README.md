@@ -17,6 +17,7 @@ Lightweight Active-record-ish pattern.
     - [`NSManagedObject` Extensions](#nsmanagedobject-extensions)
 - [Logging](#logging)
 - [Quick Start with SwiftUI](#quick-start-with-swiftui)
+- [Class Reference (beta)](https://spnkr.github.io/CoreDataPlus/documentation/coredataplus/)
 
 # Installation
 
