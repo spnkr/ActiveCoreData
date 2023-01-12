@@ -16,10 +16,36 @@ public class CoreDataPlus {
         get { CoreDataPlus.config?.viewContext as! NSManagedObjectContext }
     }
     
+    
     public var backgroundContext: NSManagedObjectContext? {
         get { CoreDataPlus.config?.backgroundContext }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - viewContext: <#viewContext description#>
+    ///   - backgroundContext: <#backgroundContext description#>
+    ///   - logHandler: <#logHandler description#>
+    ///
+    /// Example
+    /// ```swift
+    ///    let viewContext = PersistenceController.shared.container.viewContext
+    ///
+    ///            let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+    ///            backgroundContext.automaticallyMergesChangesFromParent = true
+    ///            backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+    ///
+    ///            CoreDataPlus.setup( viewContext: viewContext,
+    ///                                backgroundContext: backgroundContext,
+    ///                                    logHandler: { message in print("🌎🌧 log: \(message)") }
+    ///            )
+    ///    let viewContext = PersistenceController.shared.container.viewContext
+    /// ```
+    ///
+    ///
+    ///
+    ///
     public class func setup(viewContext: NSManagedObjectContext,
                             backgroundContext: NSManagedObjectContext? = nil,
                             logHandler: @escaping (String) -> Void) {
