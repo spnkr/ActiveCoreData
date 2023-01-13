@@ -3,8 +3,10 @@ import XCTest
 import CoreData
 
 extension NSManagedObjectContext {
-    struct HasConstraintsHolder {
+    struct CoreDataPlusHolder {
         static var _hasConstraints:Bool = false
+        static var _isAuthors:Bool = false
+        
     }
     
     /// Does this data model have uniqueness constraints?
@@ -13,10 +15,21 @@ extension NSManagedObjectContext {
     /// Intended for CoreDataPlus tests only.
     var hasConstraints:Bool {
         get {
-            return HasConstraintsHolder._hasConstraints
+            return CoreDataPlusHolder._hasConstraints
         }
         set(newValue) {
-            HasConstraintsHolder._hasConstraints = newValue
+            CoreDataPlusHolder._hasConstraints = newValue
+        }
+    }
+    
+    func clearAll() {
+        if self.hasConstraints {
+            Language.destroyAll(context: self,         saveAfter: false    ,  wrapInContextPerformBlock: false)
+            City.destroyAll(context: self,        saveAfter: false     ,  wrapInContextPerformBlock: false)
+            Country.destroyAll(context: self,      saveAfter: false    ,  wrapInContextPerformBlock: false)
+        } else {
+            Author.destroyAll(context: self,      saveAfter: false     ,  wrapInContextPerformBlock: false)
+            Book.destroyAll(context: self,        saveAfter: false     ,  wrapInContextPerformBlock: false)
         }
     }
     
@@ -73,38 +86,11 @@ class BaseTestCase: XCTestCase {
     
     /// Deletes all objects from the built-in contexts
     func clearSharedContexts() {
-        backgroundContextWithConstraints.then({
-            City.destroyAll(context: $0)
-            Country.destroyAll(context: $0)
-            Language.destroyAll(context: $0)
-            
-            try! $0.save()
-        })
+        backgroundContextWithConstraints.clearAll()
+        viewContextWithConstraints.clearAll()
         
-        viewContextWithConstraints.then({
-            City.destroyAll(context: $0)
-            Country.destroyAll(context: $0)
-            Language.destroyAll(context: $0)
-            
-            try! $0.save()
-        })
-        
-        
-        
-        backgroundContext.then({
-            Author.destroyAll(context: $0)
-            Book.destroyAll(context: $0)
-            
-            try! $0.save()
-        })
-        
-        viewContext.then({
-            Author.destroyAll(context: $0)
-            Book.destroyAll(context: $0)
-            
-            try! $0.save()
-        })
-        
+        backgroundContext.clearAll()
+        viewContext.clearAll()
     }
     
     override class func setUp() {
