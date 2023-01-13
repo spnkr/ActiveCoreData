@@ -5,17 +5,9 @@ import CoreData
 final class ContextSynchronizationTests: BaseTestCase {
     
     func test1() async throws {
-        let container = DataStore.model.inMemoryPersistentContainer
-        
-        let backgroundContext = container.newBackgroundContext()
-        backgroundContext.automaticallyMergesChangesFromParent = false
-        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        backgroundContext.hasConstraints = false
         
         let b = backgroundContext
-        
-        let c = container.viewContext
-        c.hasConstraints = false
+        let c = viewContext
         
         b.clearAll()
         c.clearAll()
@@ -39,17 +31,9 @@ final class ContextSynchronizationTests: BaseTestCase {
     }
     
     func test2() async throws {
-        let container = DataStore.modelWithConstraints.inMemoryPersistentContainer
-        
-        let backgroundContext = container.newBackgroundContext()
-        backgroundContext.automaticallyMergesChangesFromParent = false
-        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        backgroundContext.hasConstraints = true
         
         let b = backgroundContext
-        
-        let c = container.viewContext
-        c.hasConstraints = true
+        let c = viewContext
         
         b.clearAll()
         c.clearAll()
@@ -78,17 +62,9 @@ final class ContextSynchronizationTests: BaseTestCase {
     }
     
     func test3() async throws {
-        let container = DataStore.modelWithConstraints.inMemoryPersistentContainer
-        
-        let backgroundContext = container.newBackgroundContext()
-        backgroundContext.automaticallyMergesChangesFromParent = false
-        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        backgroundContext.hasConstraints = true
         
         let b = backgroundContext
-        
-        let c = container.viewContext
-        c.hasConstraints = true
+        let c = viewContext
         
         b.clearAll()
         c.clearAll()

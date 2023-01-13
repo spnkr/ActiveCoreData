@@ -5,7 +5,6 @@ import CoreData
 class DataStore {
     
     static let model = DataStore(modelName: "Model")
-    static let modelWithConstraints = DataStore(modelName: "ModelWithConstraints")
     
     private var modelName: String
     private init(modelName: String) {
