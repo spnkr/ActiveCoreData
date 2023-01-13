@@ -21,9 +21,9 @@ public extension ManagedObjectFindOrCreateBy {
     /// - Returns: An instance of the object
     static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
         
-        if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
-            fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
-        }
+        // if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
+        //     fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
+        // }
 
         return findOrCreate(column: "id", value: id, context: context)
     }
