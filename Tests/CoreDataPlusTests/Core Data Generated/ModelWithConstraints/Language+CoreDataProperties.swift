@@ -13,8 +13,8 @@ extension Language {
         return NSFetchRequest<Language>(entityName: "Language")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var title: String?
+    @NSManaged public var langCode: String?
+    @NSManaged public var name: String?
     @NSManaged public var countries: NSSet?
 
 }
