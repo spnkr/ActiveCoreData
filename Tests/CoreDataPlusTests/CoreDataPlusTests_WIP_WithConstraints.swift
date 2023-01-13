@@ -2,7 +2,53 @@ import XCTest
 @testable import CoreDataPlus
 import CoreData
 
-final class CoreDataPlusTests: XCTestCase {
+
+final class CoreDataPlusTests_1: ModelWithConstraints_BaseTestCase {
+    
+    
+    func testMerging1() throws {
+        let viewContext = DataStore.model.inMemoryPersistentContainer.viewContext
+        
+        let backgroundContext = DataStore.model.inMemoryPersistentContainer.newBackgroundContext()
+        backgroundContext.automaticallyMergesChangesFromParent = true
+        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        XCTFail()
+    }
+    
+    func testMerging2() throws {
+        let viewContext = DataStore.model.inMemoryPersistentContainer.viewContext
+        
+        let backgroundContext = DataStore.model.inMemoryPersistentContainer.newBackgroundContext()
+        backgroundContext.automaticallyMergesChangesFromParent = false
+        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        XCTFail()
+    }
+    func testMerging3() throws {
+        let viewContext = DataStore.model.inMemoryPersistentContainer.viewContext
+        
+        let backgroundContext = DataStore.model.inMemoryPersistentContainer.newBackgroundContext()
+        backgroundContext.automaticallyMergesChangesFromParent = true
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        
+        XCTFail()
+    }
+    func testMerging4() throws {
+        let viewContext = DataStore.model.inMemoryPersistentContainer.viewContext
+        
+        let backgroundContext = DataStore.model.inMemoryPersistentContainer.newBackgroundContext()
+        backgroundContext.automaticallyMergesChangesFromParent = false
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        
+        XCTFail()
+    }
+}
+
+
+
+final class CoreDataPlusTests_2: ModelWithConstraints_BaseTestCase {
+    
     // TODO: Fix and expand
     func testSaving() throws {
         let e = XCTestExpectation()
