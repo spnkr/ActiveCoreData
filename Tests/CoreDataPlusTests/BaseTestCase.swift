@@ -71,18 +71,40 @@ class BaseTestCase: XCTestCase {
         return b
     }()
     
-    /// Deletes all objects from the `c` and `b` contexts
+    /// Deletes all objects from the built-in contexts
     func clearSharedContexts() {
-        City.destroyAll(context: viewContextWithConstraints)
-        Country.destroyAll(context: viewContextWithConstraints)
-        Language.destroyAll(context: viewContextWithConstraints)
+        backgroundContextWithConstraints.then({
+            City.destroyAll(context: $0)
+            Country.destroyAll(context: $0)
+            Language.destroyAll(context: $0)
+            
+            try! $0.save()
+        })
         
-        Book.destroyAll(context: b)
-        Author.destroyAll(context: b)
-        Language.destroyAll(context: b)
+        viewContextWithConstraints.then({
+            City.destroyAll(context: $0)
+            Country.destroyAll(context: $0)
+            Language.destroyAll(context: $0)
+            
+            try! $0.save()
+        })
         
-        try! b.save()
-        try! c.save()
+        
+        
+        backgroundContext.then({
+            Author.destroyAll(context: $0)
+            Book.destroyAll(context: $0)
+            
+            try! $0.save()
+        })
+        
+        viewContext.then({
+            Author.destroyAll(context: $0)
+            Book.destroyAll(context: $0)
+            
+            try! $0.save()
+        })
+        
     }
     
     override class func setUp() {
