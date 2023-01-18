@@ -38,7 +38,9 @@ struct BookDetailView: View {
                             "Lydia Millet"
                         ]
                         
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: names.randomElement()!, context: viewContext))
+                        let author = Author.findOrCreate(column: "name", value: names.randomElement()!, context: viewContext)
+                        
+                        book.addToAuthors(author)
                     })
                     .buttonStyle(.bordered)
                     
@@ -47,8 +49,14 @@ struct BookDetailView: View {
                     })
                     .buttonStyle(.bordered)
                     
-                    Button("Add new fictional author", action: {
-                        book.addToAuthors(Author.findOrCreate(column: "name", value: "Author \(Int.random(in: 1...1000))", context: viewContext))
+                    Button("Add existing fictional author", action: {
+                        let author = Author.searchFor(.empty(), context: viewContext).randomElement()!
+                        
+                        if (((book.authors?.allObjects as? [Author])) ?? []).contains(author) {
+                            print("\(author.name ?? "Author") is already linked to this book. Doing nothing.")
+                        }
+                        
+                        book.addToAuthors(author)
                     })
                     .buttonStyle(.bordered)
                 }

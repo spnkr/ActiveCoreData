@@ -4,11 +4,11 @@ import CoreData
 
 extension NSManagedObjectContext {
     func clearAll() {
-        Language.destroyAll(context: self,         saveAfter: false    ,  wrapInContextPerformBlock: false)
-        City.destroyAll(context: self,        saveAfter: false     ,  wrapInContextPerformBlock: false)
-        Country.destroyAll(context: self,      saveAfter: false    ,  wrapInContextPerformBlock: false)
-        Author.destroyAll(context: self,      saveAfter: false     ,  wrapInContextPerformBlock: false)
-        Book.destroyAll(context: self,        saveAfter: false     ,  wrapInContextPerformBlock: false)
+        Language.destroyAll(context: self)
+        City.destroyAll(context: self)
+        Country.destroyAll(context: self)
+        Author.destroyAll(context: self)
+        Book.destroyAll(context: self)
     }
     
 }

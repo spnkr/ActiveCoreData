@@ -91,7 +91,10 @@ struct ContentView: View {
                     .foregroundColor(.red)
                     
                     Button("Delete books", action: {
-                        Book.destroyAll()
+                        CoreDataPlus.shared.backgroundContext?.perform {
+                            Book.destroyAll(using: .background)
+                            try! CoreDataPlus.shared.backgroundContext?.save()
+                        }
                     })
                     .foregroundColor(.red)
                     
@@ -101,23 +104,17 @@ struct ContentView: View {
                 }
                 
             }
-            Text("Select an item")
+            .navigationTitle("Books")
         }
+        
         .navigationViewStyle(.stack)
     }
     
     private func addTestData() {
         
+        let background = CoreDataPlus.shared.backgroundContext!
         // TODO: document
-        Task {
-            await CoreDataPlus.shared.performInBackground(schedule: .enqueued, {
-                dump("🛣🛣🛣🛣🛣🛣🛣 bckgrouind")
-            })
-        }
-        
-
-        // TODO: document
-        CoreDataPlus.shared.performInBackground {
+        background.perform {
             
             // create some authors
             // using the name field as the unique identifier
@@ -125,9 +122,8 @@ struct ContentView: View {
             let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami", using: .background)
             let jk = Author.findOrCreate(column: "name", value: "J. K. Rowling", using: .background)
             
-            // using id as the unique identifier
-            let lydia = Author.findOrCreate(id: "1234", using: .background)
-            lydia.name = "Lydia Millet"
+            // using name as the unique identifier
+            let lydia = Author.findOrCreate(column: "name", value: "Lydia Millet", using: .background)
             
             var authors = [murakami, jk, lydia]
             
@@ -143,7 +139,7 @@ struct ContentView: View {
                 }
             }
             
-            try? CoreDataPlus.shared.backgroundContext?.save()
+            try? background.save()
         }
     }
     private func deleteAllBooks() {
@@ -155,7 +151,6 @@ struct ContentView: View {
     private func deleteAllBooksAndAuthors() {
         Author.destroyAll()
         Book.destroyAll()
-        
     }
     
     private func addBook() {
