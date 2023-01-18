@@ -1,11 +1,3 @@
-# Next
-```
-viewContext.findOrCreate(id:)
-```
-
-
-
-### ⚠️ Read me out of date in this branch
 
 # CoreDataPlus ![](https://img.shields.io/badge/-Early%20Access-blue)
 
@@ -24,6 +16,7 @@ Lightweight Active-record-ish pattern.
 - [Documentation](#documentation)
     - [Predicate](#predicate)
     - [`NSManagedObject` Extensions](#nsmanagedobject-extensions)
+- [Automatic Context Management](#automatic-context-management)
 - [Logging](#logging)
 - [Quick Start with SwiftUI](#quick-start-with-swiftui)
 - [Class Reference (beta)](https://spnkr.github.io/CoreDataPlus/documentation/coredataplus/)
@@ -202,6 +195,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 ```
+
+
+## Automatic Context Management
+
+Optional. If you specify a view context and a background context using `CoreDataPlus.setup(...)`, you can simplify passing of `NSManagedObjectContext` objects.
+
+For example, `Book.findOrCreate(id:"123", context: foo)` becomes `Book.findOrCreate(id:"123")` and `Author.findOrCreate(id:"123", context: bar)` becomes `Author.findOrCreate(id:"123", using: .background)`. See the included example app for more examples.
+
 
 
 ## Quick Start with SwiftUI
