@@ -11,6 +11,7 @@ import SwiftUI
 struct Example_AppApp: App {
     let persistenceController = PersistenceController.shared
     @Environment(\.scenePhase) private var phase
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {

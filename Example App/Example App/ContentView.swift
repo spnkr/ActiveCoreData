@@ -72,7 +72,7 @@ struct ContentView: View {
                 
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     Button("New Book object with id = 100", action: {
-                        let book = Book.findOrCreate(id: "100", context: viewContext)
+                        let book = Book.findOrCreate(id: "100", using: .custom(nsManagedObjectContext: viewContext))
                         book.title = "Book(id=100) last touched \(Date().formatted(date: .abbreviated, time: .complete))"
                     })
                 }
@@ -86,12 +86,15 @@ struct ContentView: View {
                     
                     Spacer()
                     Button("Delete authors", action: {
-                        Author.destroyAll(context: viewContext)
+                        Author.destroyAll()
                     })
                     .foregroundColor(.red)
                     
                     Button("Delete books", action: {
-                        Book.destroyAll(context: viewContext)
+                        CoreDataPlus.shared.backgroundContext?.perform {
+                            Book.destroyAll(using: .background)
+                            try! CoreDataPlus.shared.backgroundContext?.save()
+                        }
                     })
                     .foregroundColor(.red)
                     
@@ -101,49 +104,57 @@ struct ContentView: View {
                 }
                 
             }
-            Text("Select an item")
+            .navigationTitle("Books")
         }
+        
         .navigationViewStyle(.stack)
     }
     
     private func addTestData() {
-        // create some authors
-        // using the name field as the unique identifier
-        // TODO: add better docs on how to handle id/identifiable with core data (not library-specific)
-        let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami", context: viewContext)
-        let jk = Author.findOrCreate(column: "name", value: "J. K. Rowling", context: viewContext)
         
-        // using id as the unique identifier
-        let lydia = Author.findOrCreate(id: "1234", context: viewContext)
-        lydia.name = "Lydia Millet"
-        
-        var authors = [murakami, jk, lydia]
-        
-        for _ in 0..<10 {
-            let newItem = Book.findOrCreate(id: UUID().uuidString, context: viewContext)
-            newItem.title = "Harry Potter Vol. \(Int.random(in: 1...1000))"
+        let background = CoreDataPlus.shared.backgroundContext!
+        // TODO: document
+        background.perform {
             
-            newItem.addToAuthors(authors.randomElement()!)
+            // create some authors
+            // using the name field as the unique identifier
+            // TODO: add better docs on how to handle id/identifiable with core data (not library-specific)
+            let murakami = Author.findOrCreate(column: "name", value: "Haruki Murakami", using: .background)
+            let jk = Author.findOrCreate(column: "name", value: "J. K. Rowling", using: .background)
             
-            // add a 2nd author to some books
-            if Int.random(in: 1...100) > 50 {
+            // using name as the unique identifier
+            let lydia = Author.findOrCreate(column: "name", value: "Lydia Millet", using: .background)
+            
+            var authors = [murakami, jk, lydia]
+            
+            for _ in 0..<10 {
+                let newItem = Book.findOrCreate(id: UUID().uuidString, using: .background)
+                newItem.title = "Harry Potter Vol. \(Int.random(in: 1...1000))"
+                
                 newItem.addToAuthors(authors.randomElement()!)
+                
+                // add a 2nd author to some books
+                if Int.random(in: 1...100) > 50 {
+                    newItem.addToAuthors(authors.randomElement()!)
+                }
             }
+            
+            try? background.save()
         }
     }
     private func deleteAllBooks() {
-        Book.destroyAll(context: viewContext)
+        Book.destroyAll(using: .background)
     }
     private func deleteAllAuthors() {
-        Author.destroyAll(context: viewContext)
+        Author.destroyAll()
     }
     private func deleteAllBooksAndAuthors() {
-        Author.destroyAll(context: viewContext)
-        Book.destroyAll(context: viewContext)
+        Author.destroyAll()
+        Book.destroyAll()
     }
     
     private func addBook() {
-        let newBook = Book.findOrCreate(id: UUID().uuidString, context: viewContext)
+        let newBook = Book.findOrCreate(id: UUID().uuidString, using: .foreground)
         newBook.title = "Book \(Int.random(in: 1...1000))"
     }
     

@@ -7,19 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE33D3972964F4F600736CA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE33D3962964F4F600736CA7 /* AppDelegate.swift */; };
+		BE4859D2297785A20087653D /* CoreDataPlus in Frameworks */ = {isa = PBXBuildFile; productRef = BE4859D1297785A20087653D /* CoreDataPlus */; };
 		BEFA11F929491832001DE330 /* Example_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11F829491832001DE330 /* Example_AppApp.swift */; };
 		BEFA11FB29491832001DE330 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11FA29491832001DE330 /* ContentView.swift */; };
 		BEFA11FD29491832001DE330 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEFA11FC29491832001DE330 /* Assets.xcassets */; };
 		BEFA120029491832001DE330 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEFA11FF29491832001DE330 /* Preview Assets.xcassets */; };
 		BEFA120229491832001DE330 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA120129491832001DE330 /* Persistence.swift */; };
 		BEFA120529491832001DE330 /* Example_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEFA120329491832001DE330 /* Example_App.xcdatamodeld */; };
-		BEFA1215294918B3001DE330 /* CoreDataPlus in Frameworks */ = {isa = PBXBuildFile; productRef = BEFA1214294918B3001DE330 /* CoreDataPlus */; };
 		BEFA121929491916001DE330 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA121629491915001DE330 /* Book.swift */; };
 		BEFA121A29491916001DE330 /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA121729491916001DE330 /* BookDetailView.swift */; };
 		BEFA121B29491916001DE330 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA121829491916001DE330 /* Author.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE0E1E5529776C7F00038C68 /* Example-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Example-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+		BE33D3962964F4F600736CA7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BE4859D0297785980087653D /* CoreDataPlus */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreDataPlus; path = ..; sourceTree = "<group>"; };
 		BEFA11F529491832001DE330 /* Example App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFA11F829491832001DE330 /* Example_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_AppApp.swift; sourceTree = "<group>"; };
 		BEFA11FA29491832001DE330 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -27,7 +31,6 @@
 		BEFA11FF29491832001DE330 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BEFA120129491832001DE330 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		BEFA120429491832001DE330 /* Example_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Example_App.xcdatamodel; sourceTree = "<group>"; };
-		BEFA12122949189B001DE330 /* CoreDataPlus */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreDataPlus; path = ..; sourceTree = "<group>"; };
 		BEFA121629491915001DE330 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		BEFA121729491916001DE330 /* BookDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
 		BEFA121829491916001DE330 /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
@@ -38,17 +41,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEFA1215294918B3001DE330 /* CoreDataPlus in Frameworks */,
+				BE4859D2297785A20087653D /* CoreDataPlus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE4859CF297785980087653D /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				BE4859D0297785980087653D /* CoreDataPlus */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		BEFA11EC29491832001DE330 = {
 			isa = PBXGroup;
 			children = (
-				BEFA12112949189B001DE330 /* Packages */,
+				BE4859CF297785980087653D /* Packages */,
 				BEFA11F729491832001DE330 /* Example App */,
 				BEFA11F629491832001DE330 /* Products */,
 				BEFA1213294918B3001DE330 /* Frameworks */,
@@ -66,9 +77,11 @@
 		BEFA11F729491832001DE330 /* Example App */ = {
 			isa = PBXGroup;
 			children = (
+				BE0E1E5529776C7F00038C68 /* Example-App-Info.plist */,
 				BEFA121829491916001DE330 /* Author.swift */,
 				BEFA121629491915001DE330 /* Book.swift */,
 				BEFA121729491916001DE330 /* BookDetailView.swift */,
+				BE33D3962964F4F600736CA7 /* AppDelegate.swift */,
 				BEFA11F829491832001DE330 /* Example_AppApp.swift */,
 				BEFA11FA29491832001DE330 /* ContentView.swift */,
 				BEFA11FC29491832001DE330 /* Assets.xcassets */,
@@ -85,14 +98,6 @@
 				BEFA11FF29491832001DE330 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		BEFA12112949189B001DE330 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				BEFA12122949189B001DE330 /* CoreDataPlus */,
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 		BEFA1213294918B3001DE330 /* Frameworks */ = {
@@ -119,7 +124,7 @@
 			);
 			name = "Example App";
 			packageProductDependencies = (
-				BEFA1214294918B3001DE330 /* CoreDataPlus */,
+				BE4859D1297785A20087653D /* CoreDataPlus */,
 			);
 			productName = "Example App";
 			productReference = BEFA11F529491832001DE330 /* Example App.app */;
@@ -175,6 +180,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE33D3972964F4F600736CA7 /* AppDelegate.swift in Sources */,
 				BEFA120529491832001DE330 /* Example_App.xcdatamodeld in Sources */,
 				BEFA120229491832001DE330 /* Persistence.swift in Sources */,
 				BEFA11FB29491832001DE330 /* ContentView.swift in Sources */,
@@ -313,6 +319,7 @@
 				DEVELOPMENT_TEAM = 63P2N3D9XL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Example-App-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -342,6 +349,7 @@
 				DEVELOPMENT_TEAM = 63P2N3D9XL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Example-App-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -384,7 +392,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BEFA1214294918B3001DE330 /* CoreDataPlus */ = {
+		BE4859D1297785A20087653D /* CoreDataPlus */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreDataPlus;
 		};
