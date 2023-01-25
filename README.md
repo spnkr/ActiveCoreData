@@ -142,12 +142,20 @@ for drawing in results {
 ### `destroyAll`
 
 Removes all objects from Core Data.
-*Deletes them from the context, and saves the context.*
+*Deletes them from the context.*
 
 ```swift
 Drawing.destroyAll(context: viewContext)
 ```
 
+
+You can also specify a predicate to only delete some items:
+```swift
+let withSpanishLanguage = Predicate("languages contains %@", es)
+Country.destroyAll(matching: withSpanishLanguage)
+```
+
+Remember to save the context after deleting objects.
 
 
 

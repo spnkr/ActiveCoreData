@@ -168,6 +168,51 @@ final class CoreTests: BaseTestCase {
         XCTAssertEqual(sort3, sort4)
     }
     
+    
+    
+    
+    
+    func testManagedObjectDeletableAndCountFor() throws {
+        let b = backgroundContext
+        let c = viewContext
+        
+        b.clearAll()
+        c.clearAll()
+        
+        CoreDataPlus.config = nil
+        CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+            
+        })
+        
+        let usa = Country.findOrCreate(id: "1")
+        let japan = Country.findOrCreate(id: "2")
+        let mexico = Country.findOrCreate(id: "3")
+        
+        let nyc = City.findOrCreate(id: "nyc-1", context: c)
+        let tokyo = City.findOrCreate(id: "japan-1", context: c)
+        
+        let enUS = Language.findOrCreate(column: "langCode", value: "en-us", context: c)
+        let jp1 = Language.findOrCreate(column: "langCode", value: "jp", context: c)
+        let es = Language.findOrCreate(column: "langCode", value: "es", context: c)
+        
+        nyc.country = usa
+        tokyo.country = japan
+        
+        usa.addToLanguages(enUS)
+        usa.addToLanguages(es)
+        japan.addToLanguages(jp1)
+        mexico.addToLanguages(es)
+        
+        let withSpanishLanguage = Predicate("languages contains %@", es)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage), 2)
+        
+        Country.destroyAll(matching: withSpanishLanguage)
+        
+        XCTAssertEqual(Country.countFor(withSpanishLanguage), 0)
+        
+    }
+    
+    
     func testManagedObjectSearchable() throws {
         let b = backgroundContext
         let c = viewContext

@@ -4,7 +4,7 @@ import CoreData
 
 final class ContextSynchronizationTests: BaseTestCase {
     
-    func test1() async throws {
+    func syncTestBasic() async throws {
         
         let b = backgroundContext
         let c = viewContext
@@ -30,7 +30,7 @@ final class ContextSynchronizationTests: BaseTestCase {
         XCTAssertEqual(try c.count(for: Book.fetchRequest()), 4)
     }
     
-    func test2() async throws {
+    func syncTestExtended() async throws {
         
         let b = backgroundContext
         let c = viewContext
@@ -61,7 +61,7 @@ final class ContextSynchronizationTests: BaseTestCase {
         XCTAssertEqual(try c.count(for: City.fetchRequest()), 2)
     }
     
-    func test3() async throws {
+    func syncTestEnhanced() async throws {
         
         let b = backgroundContext
         let c = viewContext
@@ -98,5 +98,60 @@ final class ContextSynchronizationTests: BaseTestCase {
         XCTAssertEqual(Language.findButDoNotCreate(column: "langCode", value: "jp", context: b)!.name, "Japanese 2")
     }
     
-    
+    func testManagedObjectDeletableAndCountForSynchronization() throws {
+        let b = backgroundContext
+        let c = viewContext
+        
+        b.clearAll()
+        c.clearAll()
+        
+        CoreDataPlus.config = nil
+        CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+            
+        })
+        
+        let usa = Country.findOrCreate(id: "1")
+        let japan = Country.findOrCreate(id: "2")
+        let mexico = Country.findOrCreate(id: "3")
+        
+        let nyc = City.findOrCreate(id: "nyc-1", context: c)
+        let tokyo = City.findOrCreate(id: "japan-1", context: c)
+        
+        let enUS = Language.findOrCreate(column: "langCode", value: "en-us", context: c)
+        let jp1 = Language.findOrCreate(column: "langCode", value: "jp", context: c)
+        let es = Language.findOrCreate(column: "langCode", value: "es", context: c)
+        
+        nyc.country = usa
+        tokyo.country = japan
+        
+        usa.addToLanguages(enUS)
+        usa.addToLanguages(es)
+        japan.addToLanguages(jp1)
+        mexico.addToLanguages(es)
+        
+        let withSpanishLanguage = Predicate("languages contains %@", es)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage), 2)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .background), 0)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .foreground), 2)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .custom(nsManagedObjectContext: c)), 2)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .custom(nsManagedObjectContext: b)), 0)
+        
+        try! c.save()
+        
+        XCTAssertEqual(Country.countFor(withSpanishLanguage), 2)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .background), 2)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .foreground), 2)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .custom(nsManagedObjectContext: c)), 2)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .custom(nsManagedObjectContext: b)), 2)
+        
+        Country.destroyAll(matching: withSpanishLanguage)
+        
+        XCTAssertEqual(Country.countFor(withSpanishLanguage), 0)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .background), 2)
+        
+        try! c.save()
+        
+        XCTAssertEqual(Country.countFor(withSpanishLanguage), 0)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .background), 0)
+    }
 }
