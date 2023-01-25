@@ -261,8 +261,8 @@ struct ContentView: View {
 
 
 ## Todo
-- [ ] Unit tests
-- [ ] Option to disable automatic saving when using `destroyAll`
+- [x] Unit tests
+- [x] Option to disable automatic saving when using `destroyAll`
 - [ ] Add docs on `NSPersistentContainer` agnosticity
 - [ ] Have an idea? Open an issue!
 
