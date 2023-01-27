@@ -9,17 +9,11 @@ Lightweight Active-record-ish pattern.
 
 👨‍💻 Works with automatic or manual `NSManagedObject` code generation.
 
-# Contents
+# Documentation & Guides
 
-- [Installation](#installation)
-- [Example App](#example-app)
-- [Documentation](#documentation)
-    - [Predicate](#predicate)
-    - [`NSManagedObject` Extensions](#nsmanagedobject-extensions)
-- [Automatic Context Management](#automatic-context-management)
-- [Logging](#logging)
-- [Quick Start with SwiftUI](#quick-start-with-swiftui)
-- [Class Reference (beta)](https://spnkr.github.io/CoreDataPlus/documentation/coredataplus/)
+[Go to documentation](https://coredataplus.readme.io/)
+
+***
 
 # Installation
 
