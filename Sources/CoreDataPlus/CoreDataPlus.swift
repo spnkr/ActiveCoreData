@@ -3,6 +3,8 @@ import Foundation
 import CoreData
 import NotificationCenter
 
+
+
 public class CoreDataPlus {
     public static let shared = CoreDataPlus()
     internal static var config: Config?
@@ -24,10 +26,12 @@ public class CoreDataPlus {
     }
     
     public var backgroundContext: NSManagedObjectContext? {
-        get { CoreDataPlus.config?.backgroundContext }
+        get {
+            CoreDataPlus.config?.backgroundContext
+        }
     }
     
-    /// <#Description#>
+    /// Description
     /// - Parameters:
     ///   - viewContext: <#viewContext description#>
     ///   - backgroundContext: <#backgroundContext description#>
@@ -51,19 +55,36 @@ public class CoreDataPlus {
     ///
     ///
     ///
+    
+    // public class func setup(persistentContainer)
+    //
+    // public class func setup(nil)
     public class func setup(viewContext: NSManagedObjectContext,
                             backgroundContext: NSManagedObjectContext? = nil,
-                            logHandler: @escaping (String) -> Void) {
+                            logHandler: @escaping (String) -> Void) throws {
         
         if CoreDataPlus.config != nil {
-            raiseError(InternalError.setupAlreadyCalled)
+            throw InternalError.setupAlreadyCalled
         }
         
         CoreDataPlusLogger.configure(logHandler: logHandler)
         CoreDataPlus.config = Config(viewContext: viewContext, backgroundContext: backgroundContext)
         
     }
-
+    
+    /// One line config. Sets up core data.
+    public class func setup(store: CoreDataPlusStore) throws {
+        if CoreDataPlus.config != nil {
+            throw InternalError.setupAlreadyCalled
+        }
+        
+        // let persist = Persist.shared // using guess model name
+        // then pass the viewContext and backgroundContext to this
+        
+        // CoreDataPlusLogger.configure(logHandler: logHandler)
+        CoreDataPlus.config = Config(viewContext: store.viewContext, backgroundContext: store.backgroundContext)
+    }
+    
     private init() {
         CoreDataPlusLogger.shared.log("Initializing CoreDataPlus.shared")
     }
