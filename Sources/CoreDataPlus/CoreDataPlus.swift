@@ -56,9 +56,10 @@ public class CoreDataPlus {
     ///
     ///
     
+    // for comment:
+    // should these setup methods be added?
     // public class func setup(persistentContainer)
-    //
-    // public class func setup(nil)
+    // public class func setup()
     public class func setup(viewContext: NSManagedObjectContext,
                             backgroundContext: NSManagedObjectContext? = nil,
                             logHandler: @escaping (String) -> Void) throws {
@@ -78,10 +79,6 @@ public class CoreDataPlus {
             throw InternalError.setupAlreadyCalled
         }
         
-        // let persist = Persist.shared // using guess model name
-        // then pass the viewContext and backgroundContext to this
-        
-        // CoreDataPlusLogger.configure(logHandler: logHandler)
         CoreDataPlus.config = Config(viewContext: store.viewContext, backgroundContext: store.backgroundContext)
     }
     
