@@ -12,7 +12,7 @@ internal enum InternalError: Error, LocalizedError {
         case .noBackground:
             return "No background context specified. Use .setup with a backgroundContext: parameter."
         case .noForeground:
-            return "No foreground context (view context) specified. Use .setup with a viewContext: parameter."
+            return "No foreground context (view context) specified. Try using .setup with a viewContext: parameter."
         default:
             return "\(self)"
         }
