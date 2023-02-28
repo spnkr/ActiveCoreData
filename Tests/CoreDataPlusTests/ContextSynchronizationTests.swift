@@ -106,7 +106,7 @@ final class ContextSynchronizationTests: BaseTestCase {
         c.clearAll()
         
         CoreDataPlus.config = nil
-        CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        try! CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
             
         })
         
