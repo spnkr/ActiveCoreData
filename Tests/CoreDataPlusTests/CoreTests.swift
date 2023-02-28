@@ -23,13 +23,13 @@ final class CoreTests: BaseTestCase {
         let book2 = Book.findOrCreate(id: "3", context: c)
         XCTAssertEqual(book2.id, "3")
         
-        let noExist = Book.findButDoNotCreate(id: "100", context: c)
+        let noExist = Book.find(id: "100", context: c)
         XCTAssertNil(noExist)
         
         let book100 = Book.findOrCreate(id: "100", context: c)
         book100.title = "A title"
         
-        let book100bNil = Book.findButDoNotCreate(id: "100", context: b)
+        let book100bNil = Book.find(id: "100", context: b)
         XCTAssertNil(book100bNil)
         
         try c.save()
@@ -37,16 +37,16 @@ final class CoreTests: BaseTestCase {
         let book100b = Book.findOrCreate(id: "100", context: b)
         XCTAssertEqual(book100b.title, "A title")
         
-        let doesExist = Book.findButDoNotCreate(id: "100", context: c)
+        let doesExist = Book.find(id: "100", context: c)
         XCTAssertNotNil(doesExist)
         
-        let noExist2 = Book.findButDoNotCreate(column: "title", value: "A new book", context: c)
+        let noExist2 = Book.find(column: "title", value: "A new book", context: c)
         XCTAssertNil(noExist2)
         
         let book200 = Book.findOrCreate(column: "title", value: "A new book", context: c)
         book200.id = "5"
         
-        let doesExist2 = Book.findButDoNotCreate(column: "title", value: "A new book", context: c)
+        let doesExist2 = Book.find(column: "title", value: "A new book", context: c)
         XCTAssertNotNil(doesExist2)
         XCTAssertEqual(doesExist2?.id, "5")
         
@@ -75,13 +75,13 @@ final class CoreTests: BaseTestCase {
         let book2 = Book.findOrCreate(id: "3")
         XCTAssertEqual(book2.id, "3")
         
-        let noExist = Book.findButDoNotCreate(id: "100")
+        let noExist = Book.find(id: "100")
         XCTAssertNil(noExist)
         
         let book100 = Book.findOrCreate(id: "100")
         book100.title = "A title"
         
-        let book100bNil = Book.findButDoNotCreate(id: "100", using: .background)
+        let book100bNil = Book.find(id: "100", using: .background)
         XCTAssertNil(book100bNil)
         
         try c.save()
@@ -89,16 +89,16 @@ final class CoreTests: BaseTestCase {
         let book100b = Book.findOrCreate(id: "100", using: .background)
         XCTAssertEqual(book100b.title, "A title")
         
-        let doesExist = Book.findButDoNotCreate(id: "100")
+        let doesExist = Book.find(id: "100")
         XCTAssertNotNil(doesExist)
         
-        let noExist2 = Book.findButDoNotCreate(column: "title", value: "A new book")
+        let noExist2 = Book.find(column: "title", value: "A new book")
         XCTAssertNil(noExist2)
         
         let book200 = Book.findOrCreate(column: "title", value: "A new book")
         book200.id = "5"
         
-        let doesExist2 = Book.findButDoNotCreate(column: "title", value: "A new book")
+        let doesExist2 = Book.find(column: "title", value: "A new book")
         XCTAssertNotNil(doesExist2)
         XCTAssertEqual(doesExist2?.id, "5")
         

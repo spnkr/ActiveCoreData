@@ -125,7 +125,7 @@ struct ContentView: View {
             // using name as the unique identifier
             let lydia = Author.findOrCreate(column: "name", value: "Lydia Millet", using: .background)
             
-            var authors = [murakami, jk, lydia]
+            let authors = [murakami, jk, lydia]
             
             for _ in 0..<10 {
                 let newItem = Book.findOrCreate(id: UUID().uuidString, using: .background)
