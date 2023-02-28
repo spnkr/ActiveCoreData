@@ -2,7 +2,7 @@ import CoreData
 import Foundation
 
 public protocol ManagedObjectFindOrCreateBy where Self: NSFetchRequestResult {
-    // suggested: use id. add this as a column in your db. reason: you are probably conforming to Identifiable in your NSManagedObject subclass.
+    // Tip: You will probably want to define id, as part of the Identifiable protocol. If you add this as a column in your db, you get automatic conformance. If your NSManagedObject doesn't have an `id` property in the database, you'd implement this:
     // var id: String { get set }
 
     init(context: NSManagedObjectContext)
@@ -12,22 +12,21 @@ public protocol ManagedObjectFindOrCreateBy where Self: NSFetchRequestResult {
 }
 
 public extension ManagedObjectFindOrCreateBy {
-    // MARK: - Using NSManagedObjectContext
+    // MARK: - Find or create
+    
     /// Finds an instance of the NSManagedObject that has a column (property) matching the passed value. If it doesn't exist in the database, creates one, and returns it.
     /// - Parameters:
     ///   - column: Name of column that uniquely identifies a row (primary key).
     ///   - value: Value of the primary key.
-    ///   - context: NSManagedObjectContext to use
+    ///   - using: Optional. Specify `.foreground` for the main view context (operates on the main thread). Use `.background` to use a shared background context that automatically merges into the view context. Use `.custom(nsManagedObjectContext:)` to choose your own NSManagedObjectContext.
     /// - Returns: An instance of the object
-    static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
+    static func findOrCreate(column: String, value: Any, using: ContextMode = .foreground) -> Self {
+        let context = contextModeToNSManagedObjectContext(using)
         
-        // if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
-        //     fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
-        // }
-        
-        return findOrCreate(column: "id", value: id, context: context)
+        return findOrCreate(column: column, value: value, context: context)
     }
     
+    /// Same as `findOrCreate(column: String, value: Any, using: ContextMode = .foreground)`, but allows you to pass your own `NSManagedObjectContext`.
     static func findOrCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self {
         let request = NSFetchRequest<Self>()
         request.predicate = Predicate("\(column) = %@", value)
@@ -52,16 +51,37 @@ public extension ManagedObjectFindOrCreateBy {
         return object
     }
     
-    static func findButDoNotCreate(id: String, context: NSManagedObjectContext) -> Self? {
-        if entity().attributesByName["id"]?.type != NSAttributeDescription.AttributeType.string {
-            fatalError("The column id must be of type String. Set this in your xcdatamodel. id is currently of type \(entity().attributesByName["name"]?.attributeValueClassName ?? "<unknown>")")
-        }
+    /// Same as `findOrCreate(column: String, value: Any, ...`, but with the column name set to `id`.
+    static func findOrCreate(id: String, using: ContextMode = .foreground) -> Self {
+        let context = contextModeToNSManagedObjectContext(using)
         
-        return findButDoNotCreate(column: "id", value: id, context: context)
+        return findOrCreate(column: "id", value: id, context: context)
+    }
+    
+    /// Same as `findOrCreate(column: String, value: Any, ...`, but with the column name set to `id`.
+    static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
+        return findOrCreate(column: "id", value: id, context: context)
     }
     
     
-    static func findButDoNotCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self? {
+    // MARK: - Find
+    /// Finds an instance of the NSManagedObject that has a column (property) matching the passed value. If it doesn't exist in the database, creates one, and returns it.
+    /// - Parameters:
+    ///   - column: Name of column that uniquely identifies a row (primary key).
+    ///   - value: Value of the primary key.
+    ///   - context: NSManagedObjectContext to use
+    /// - Returns: An instance of the object, or nil
+    static func find(id: String, context: NSManagedObjectContext) -> Self? {
+        return find(column: "id", value: id, context: context)
+    }
+    
+    /// Finds an instance of the NSManagedObject that has a column (property) matching the passed value. If it doesn't exist in the database, creates one, and returns it.
+    /// - Parameters:
+    ///   - column: Name of column that uniquely identifies a row (primary key).
+    ///   - value: Value of the primary key.
+    ///   - context: NSManagedObjectContext to use
+    /// - Returns: An instance of the object, or nil
+    static func find(column: String, value: Any, context: NSManagedObjectContext) -> Self? {
         
         let request = NSFetchRequest<Self>()
         request.predicate = Predicate("\(column) = %@", value)
@@ -81,32 +101,19 @@ public extension ManagedObjectFindOrCreateBy {
         return nil
     }
     
-    // MARK: - Using ContextMode
-    static func findOrCreate(id: String, using: ContextMode = .foreground) -> Self {
-        let context = contextModeToNSManagedObjectContext(using)
-        
-        return findOrCreate(column: "id", value: id, context: context)
+    static func find(id: String, using: ContextMode = .foreground) -> Self? {
+        return find(column: "id", value: id, using: using)
     }
     
-    /// Finds an instance of the NSManagedObject that has a column (property) matching the passed value. If it doesn't exist in the database, creates one, and returns it.
+    /// Finds an instance of the NSManagedObject that has a column (property) matching the passed value. If it doesn't exist in the database, returns nil.
     /// - Parameters:
     ///   - column: Name of column that uniquely identifies a row (primary key).
     ///   - value: Value of the primary key.
     ///   - using: Optional. Specify `.foreground` for the main view context (operates on the main thread). Use `.background` to use a shared background context that automatically merges into the view context. Use `.custom(nsManagedObjectContext:)` to choose your own NSManagedObjectContext.
-    /// - Returns: An instance of the object
-    static func findOrCreate(column: String, value: Any, using: ContextMode = .foreground) -> Self {
+    /// - Returns: An instance of the object, or nil
+    static func find(column: String, value: Any, using: ContextMode = .foreground) -> Self? {
         let context = contextModeToNSManagedObjectContext(using)
         
-        return findOrCreate(column: column, value: value, context: context)
-    }
-    
-    static func findButDoNotCreate(id: String, using: ContextMode = .foreground) -> Self? {
-        return findButDoNotCreate(column: "id", value: id, using: using)
-    }
-    
-    static func findButDoNotCreate(column: String, value: Any, using: ContextMode = .foreground) -> Self? {
-        let context = contextModeToNSManagedObjectContext(using)
-        
-        return findButDoNotCreate(column: column, value: value, context: context)
+        return find(column: column, value: value, context: context)
     }
 }

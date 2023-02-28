@@ -94,8 +94,8 @@ final class ContextSynchronizationTests: BaseTestCase {
         XCTAssertEqual(try c.count(for: Language.fetchRequest()), 2)
         XCTAssertEqual(try c.count(for: City.fetchRequest()), 1)
         
-        XCTAssertEqual(Language.findButDoNotCreate(column: "langCode", value: "jp", context: c)!.name, "Japanese 2")
-        XCTAssertEqual(Language.findButDoNotCreate(column: "langCode", value: "jp", context: b)!.name, "Japanese 2")
+        XCTAssertEqual(Language.find(column: "langCode", value: "jp", context: c)!.name, "Japanese 2")
+        XCTAssertEqual(Language.find(column: "langCode", value: "jp", context: b)!.name, "Japanese 2")
     }
     
     func testManagedObjectDeletableAndCountForSynchronization() throws {
