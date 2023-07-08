@@ -1,6 +1,6 @@
-# ``CoreDataPlus``
+# ``ActiveCoreData``
 
-Overview and quick start are on the [GitHub README](https://github.com/spnkr/CoreDataPlus).
+Overview and quick start are on the [GitHub README](https://github.com/spnkr/ActiveCoreData).
 
 > Warning: Beta documentation
 

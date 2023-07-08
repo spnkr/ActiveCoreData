@@ -1,5 +1,5 @@
 import XCTest
-@testable import CoreDataPlus
+@testable import ActiveCoreData
 import CoreData
 
 extension NSManagedObjectContext {

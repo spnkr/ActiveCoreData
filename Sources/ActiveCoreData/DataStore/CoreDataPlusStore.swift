@@ -3,8 +3,8 @@ import Foundation
 import CoreData
 import NotificationCenter
 
-public class CoreDataPlusStore: CoreDataContainer {
-    public static let shared = CoreDataPlusStore()
+public class ActiveCoreDataStore: CoreDataContainer {
+    public static let shared = ActiveCoreDataStore()
     private init() {
         modelName = guessModelName()
     }
@@ -19,7 +19,7 @@ public class CoreDataPlusStore: CoreDataContainer {
     
     /// Use this
     public func configure() {
-        let persist = CoreDataPlusStore.shared
+        let persist = ActiveCoreDataStore.shared
         
         guard persist.didConfigure == false else {
             NSLog("Already configured. Ignorning.")
@@ -28,14 +28,14 @@ public class CoreDataPlusStore: CoreDataContainer {
         
         persist.modelName = guessModelName()
         
-        CoreDataPlusLogger.shared.log("Enabled persistence for data model '\(String(describing: persist.modelName))' (auto-detected)")
+        ActiveCoreDataLogger.shared.log("Enabled persistence for data model '\(String(describing: persist.modelName))' (auto-detected)")
         
         persist.didConfigure = true
     }
     
     /// If you have a model name mistmatch:
     public func configure(modelName overrideName: String?) {
-        let persist = CoreDataPlusStore.shared
+        let persist = ActiveCoreDataStore.shared
         
         guard persist.didConfigure == false else {
             NSLog("Already configured. Ignorning.")
@@ -44,7 +44,7 @@ public class CoreDataPlusStore: CoreDataContainer {
         
         persist.modelName = overrideName
         
-        CoreDataPlusLogger.shared.log("Enabled persistence for data model '\(String(describing: persist.modelName))'")
+        ActiveCoreDataLogger.shared.log("Enabled persistence for data model '\(String(describing: persist.modelName))'")
         
         persist.didConfigure = true
     }
@@ -52,13 +52,13 @@ public class CoreDataPlusStore: CoreDataContainer {
     // /// To use your own NSPersistentContainer with our automatic context management:
     // /// For example, to set various properties like change tracking.
     // public func configure(container: NSPersistentContainer) {
-    //     let persist = CoreDataPlusStore.shared
+    //     let persist = ActiveCoreDataStore.shared
     //
     //     guard persist.didConfigure == false else { return }
     //
     //     persist.overriddenPersistentContainer = container
     //
-    //     CoreDataPlusLogger.shared.log("Enabled persistence using manual NSPersistentContainer")
+    //     ActiveCoreDataLogger.shared.log("Enabled persistence using manual NSPersistentContainer")
     //
     //     persist.didConfigure = true
     // }
@@ -68,7 +68,7 @@ public class CoreDataPlusStore: CoreDataContainer {
     //
     // }
     
-    /// To use your own NSManagedObjectContext management, don't use CoreDataPlusStore. Instead pass your contexts to each call.
+    /// To use your own NSManagedObjectContext management, don't use ActiveCoreDataStore. Instead pass your contexts to each call.
     public func configure(viewContext: NSManagedObjectContext, backgroundContext: NSManagedObjectContext?) { }
     
     /// Read-only context for use on main thread.

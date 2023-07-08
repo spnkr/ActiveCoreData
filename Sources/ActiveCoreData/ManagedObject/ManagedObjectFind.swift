@@ -46,7 +46,7 @@ public extension ManagedObjectFind {
                 return object
             }
         } catch {
-            CoreDataPlusLogger.shared.log("FindButDoNotCreateById context fetch failure: \(error.localizedDescription)")
+            ActiveCoreDataLogger.shared.log("FindButDoNotCreateById context fetch failure: \(error.localizedDescription)")
         }
         
         return nil

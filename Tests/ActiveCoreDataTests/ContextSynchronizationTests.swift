@@ -1,5 +1,5 @@
 import XCTest
-@testable import CoreDataPlus
+@testable import ActiveCoreData
 import CoreData
 
 final class ContextSynchronizationTests: BaseTestCase {
@@ -105,8 +105,8 @@ final class ContextSynchronizationTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        CoreDataPlus.config = nil
-        try! CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        ActiveCoreData.config = nil
+        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
             
         })
         

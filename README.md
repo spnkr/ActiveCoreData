@@ -1,5 +1,5 @@
 
-# CoreDataPlus ![](https://img.shields.io/badge/-Early%20Access-blue)
+# ActiveCoreData
 
 Lightweight Active-record-ish pattern.
 

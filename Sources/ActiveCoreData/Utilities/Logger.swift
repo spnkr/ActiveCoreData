@@ -1,8 +1,8 @@
 import Foundation
 import CoreData
 
-public class CoreDataPlusLogger {
-    static let shared = CoreDataPlusLogger()
+public class ActiveCoreDataLogger {
+    static let shared = ActiveCoreDataLogger()
     var logHandler: (String) -> Void = { _ in }
     
     func log(_ message: String) {

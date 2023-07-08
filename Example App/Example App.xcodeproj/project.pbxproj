@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BE33D3972964F4F600736CA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE33D3962964F4F600736CA7 /* AppDelegate.swift */; };
-		BE4859D2297785A20087653D /* CoreDataPlus in Frameworks */ = {isa = PBXBuildFile; productRef = BE4859D1297785A20087653D /* CoreDataPlus */; };
+		BE4859D2297785A20087653D /* ActiveCoreData in Frameworks */ = {isa = PBXBuildFile; productRef = BE4859D1297785A20087653D /* ActiveCoreData */; };
 		BEFA11F929491832001DE330 /* Example_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11F829491832001DE330 /* Example_AppApp.swift */; };
 		BEFA11FB29491832001DE330 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFA11FA29491832001DE330 /* ContentView.swift */; };
 		BEFA11FD29491832001DE330 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEFA11FC29491832001DE330 /* Assets.xcassets */; };
@@ -23,7 +23,7 @@
 /* Begin PBXFileReference section */
 		BE0E1E5529776C7F00038C68 /* Example-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Example-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		BE33D3962964F4F600736CA7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BE4859D0297785980087653D /* CoreDataPlus */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreDataPlus; path = ..; sourceTree = "<group>"; };
+		BE4859D0297785980087653D /* ActiveCoreData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ActiveCoreData; path = ..; sourceTree = "<group>"; };
 		BEFA11F529491832001DE330 /* Example App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFA11F829491832001DE330 /* Example_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_AppApp.swift; sourceTree = "<group>"; };
 		BEFA11FA29491832001DE330 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -41,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE4859D2297785A20087653D /* CoreDataPlus in Frameworks */,
+				BE4859D2297785A20087653D /* ActiveCoreData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,7 +51,7 @@
 		BE4859CF297785980087653D /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				BE4859D0297785980087653D /* CoreDataPlus */,
+				BE4859D0297785980087653D /* ActiveCoreData */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -124,7 +124,7 @@
 			);
 			name = "Example App";
 			packageProductDependencies = (
-				BE4859D1297785A20087653D /* CoreDataPlus */,
+				BE4859D1297785A20087653D /* ActiveCoreData */,
 			);
 			productName = "Example App";
 			productReference = BEFA11F529491832001DE330 /* Example App.app */;
@@ -392,9 +392,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BE4859D1297785A20087653D /* CoreDataPlus */ = {
+		BE4859D1297785A20087653D /* ActiveCoreData */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = CoreDataPlus;
+			productName = ActiveCoreData;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -1,6 +1,6 @@
 import Foundation
 import CoreData
-import CoreDataPlus
+import ActiveCoreData
 
 extension Book: ManagedObjectCountable,
                 ManagedObjectSearchable,

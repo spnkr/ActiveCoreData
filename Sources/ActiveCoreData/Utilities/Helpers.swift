@@ -8,11 +8,11 @@ internal func raiseError(_ e: InternalError) {
 internal func contextModeToNSManagedObjectContext(_ using: ContextMode) -> NSManagedObjectContext {
     switch using {
     case .foreground:
-        return CoreDataPlus.shared.viewContext
+        return ActiveCoreData.shared.viewContext
     case .background:
-        guard let c = CoreDataPlus.shared.backgroundContext else {
+        guard let c = ActiveCoreData.shared.backgroundContext else {
             raiseError(.noBackground)
-            return CoreDataPlus.shared.viewContext
+            return ActiveCoreData.shared.viewContext
         }
         return c
     case .custom(let context):

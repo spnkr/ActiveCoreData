@@ -36,7 +36,7 @@ public extension ManagedObjectFindOrCreateBy {
                 return object
             }
         } catch {
-            CoreDataPlusLogger.shared.log("findOrCreate context fetch failure: \(error.localizedDescription)")
+            ActiveCoreDataLogger.shared.log("findOrCreate context fetch failure: \(error.localizedDescription)")
         }
         
         let object = Self(context: context)

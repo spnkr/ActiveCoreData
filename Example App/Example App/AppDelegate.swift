@@ -1,6 +1,6 @@
 import Foundation
 import UIKit
-import CoreDataPlus
+import ActiveCoreData
 import CoreData
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // backgroundContext.automaticallyMergesChangesFromParent = true
         // backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         //
-        // try! CoreDataPlus.setup( viewContext: viewContext,
+        // try! ActiveCoreData.setup( viewContext: viewContext,
         //                     backgroundContext: backgroundContext,
         //                     logHandler: { message in print("🌎🌧 log: \(message)") }
         // )
