@@ -5,8 +5,8 @@ import NotificationCenter
 
 
 
-public class CoreDataPlus {
-    public static let shared = CoreDataPlus()
+public class ActiveCoreData {
+    public static let shared = ActiveCoreData()
     internal static var config: Config?
     
     internal struct Config {
@@ -16,7 +16,7 @@ public class CoreDataPlus {
     
     public var viewContext: NSManagedObjectContext {
         get {
-            guard let config = CoreDataPlus.config else {
+            guard let config = ActiveCoreData.config else {
                 raiseError(.noForeground)
                 return NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
             }
@@ -27,7 +27,7 @@ public class CoreDataPlus {
     
     public var backgroundContext: NSManagedObjectContext? {
         get {
-            CoreDataPlus.config?.backgroundContext
+            ActiveCoreData.config?.backgroundContext
         }
     }
     
@@ -45,7 +45,7 @@ public class CoreDataPlus {
     ///            backgroundContext.automaticallyMergesChangesFromParent = true
     ///            backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
     ///
-    ///            CoreDataPlus.setup( viewContext: viewContext,
+    ///            ActiveCoreData.setup( viewContext: viewContext,
     ///                                backgroundContext: backgroundContext,
     ///                                    logHandler: { message in print("🌎🌧 log: \(message)") }
     ///            )
@@ -64,26 +64,26 @@ public class CoreDataPlus {
                             backgroundContext: NSManagedObjectContext? = nil,
                             logHandler: @escaping (String) -> Void) throws {
         
-        if CoreDataPlus.config != nil {
+        if ActiveCoreData.config != nil {
             throw InternalError.setupAlreadyCalled
         }
         
-        CoreDataPlusLogger.configure(logHandler: logHandler)
-        CoreDataPlus.config = Config(viewContext: viewContext, backgroundContext: backgroundContext)
+        ActiveCoreDataLogger.configure(logHandler: logHandler)
+        ActiveCoreData.config = Config(viewContext: viewContext, backgroundContext: backgroundContext)
         
     }
     
     /// One line config. Sets up core data.
-    public class func setup(store: CoreDataPlusStore) throws {
-        if CoreDataPlus.config != nil {
+    public class func setup(store: ActiveCoreDataStore) throws {
+        if ActiveCoreData.config != nil {
             throw InternalError.setupAlreadyCalled
         }
         
-        CoreDataPlus.config = Config(viewContext: store.viewContext, backgroundContext: store.backgroundContext)
+        ActiveCoreData.config = Config(viewContext: store.viewContext, backgroundContext: store.backgroundContext)
     }
     
     private init() {
-        CoreDataPlusLogger.shared.log("Initializing CoreDataPlus.shared")
+        ActiveCoreDataLogger.shared.log("Initializing ActiveCoreData.shared")
     }
 }
 

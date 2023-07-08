@@ -1,5 +1,5 @@
 import XCTest
-@testable import CoreDataPlus
+@testable import ActiveCoreData
 import CoreData
 
 final class CoreTests: BaseTestCase {
@@ -8,7 +8,7 @@ final class CoreTests: BaseTestCase {
         
         let b = backgroundContext
         let c = viewContext
-        CoreDataPlus.config = CoreDataPlus.Config(viewContext: c)
+        ActiveCoreData.config = ActiveCoreData.Config(viewContext: c)
         
         b.clearAll()
         c.clearAll()
@@ -59,8 +59,8 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        CoreDataPlus.config = nil
-        try! CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        ActiveCoreData.config = nil
+        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
             
         })
         
@@ -123,8 +123,8 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        CoreDataPlus.config = nil
-        try! CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        ActiveCoreData.config = nil
+        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
             
         })
         
@@ -140,12 +140,12 @@ final class CoreTests: BaseTestCase {
             }
             dump(count)
             
-            let book = await CoreDataPlus.shared.viewContext.perform({
+            let book = await ActiveCoreData.shared.viewContext.perform({
                 return Book.findOrCreate(id: "1")
             })
             XCTAssertEqual(book.id, "1")
             
-            let book2 = await CoreDataPlus.shared.backgroundContext!.perform({
+            let book2 = await ActiveCoreData.shared.backgroundContext!.perform({
                 return Book.findOrCreate(id: "10", using: .background)
             })
             XCTAssertEqual(book2.id, "10")
@@ -179,8 +179,8 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        CoreDataPlus.config = nil
-        try! CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        ActiveCoreData.config = nil
+        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
             
         })
         
@@ -220,8 +220,8 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        CoreDataPlus.config = nil
-        try! CoreDataPlus.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        ActiveCoreData.config = nil
+        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
             
         })
         

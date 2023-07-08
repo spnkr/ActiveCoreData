@@ -124,7 +124,7 @@ extension NSPersistentStoreCoordinator {
   }
 }
 
-extension CoreDataPlusStore {
+extension ActiveCoreDataStore {
     
     
     /// Backs up your database to a .sqlite file. Safely copies the specified `NSPersistentStore` to a temporary file, so this works even if your database is in use.

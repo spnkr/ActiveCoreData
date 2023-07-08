@@ -6,18 +6,18 @@
 //
 
 import SwiftUI
-import CoreDataPlus
+import ActiveCoreData
 
 @main
 struct Example_AppApp: App {
-    let yourDataStore = CoreDataPlusStore.shared
+    let yourDataStore = ActiveCoreDataStore.shared
     
     @Environment(\.scenePhase) private var phase
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     init() {
         do {
-            try CoreDataPlus.setup(store: CoreDataPlusStore.shared)
+            try ActiveCoreData.setup(store: ActiveCoreDataStore.shared)
         } catch {
             NSLog(error.localizedDescription)
         }

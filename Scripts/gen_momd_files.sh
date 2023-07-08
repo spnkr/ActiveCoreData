@@ -1,4 +1,4 @@
-cd ../Tests/CoreDataPlusTests/Data\ Models/
+cd ../Tests/ActiveCoreDataTests/Data\ Models/
 
 /Applications/Xcode.app/Contents/Developer/usr/bin/momc Model.xcdatamodeld Model.momd
 

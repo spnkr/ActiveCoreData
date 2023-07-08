@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreData
-import CoreDataPlus
+import ActiveCoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -91,9 +91,9 @@ struct ContentView: View {
                     .foregroundColor(.red)
                     
                     Button("Delete books", action: {
-                        CoreDataPlus.shared.backgroundContext?.perform {
+                        ActiveCoreData.shared.backgroundContext?.perform {
                             Book.destroyAll(using: .background)
-                            try! CoreDataPlus.shared.backgroundContext?.save()
+                            try! ActiveCoreData.shared.backgroundContext?.save()
                         }
                     })
                     .foregroundColor(.red)
@@ -112,7 +112,7 @@ struct ContentView: View {
     
     private func addTestData() {
         
-        let background = CoreDataPlus.shared.backgroundContext!
+        let background = ActiveCoreData.shared.backgroundContext!
         // TODO: document
         background.perform {
             

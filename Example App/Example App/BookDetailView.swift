@@ -2,7 +2,7 @@
 
 import Foundation
 import SwiftUI
-import CoreDataPlus
+import ActiveCoreData
 
 struct BookDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext

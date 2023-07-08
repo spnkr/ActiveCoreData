@@ -1,5 +1,5 @@
 import XCTest
-@testable import CoreDataPlus
+@testable import ActiveCoreData
 import CoreData
 
 extension Author: ManagedObjectPlus { }
@@ -8,6 +8,6 @@ extension City: ManagedObjectPlus { }
 extension Country: ManagedObjectPlus { }
 extension Language: ManagedObjectPlus { }
 
-func pred(_ string: String, _ args: Any?...) -> Predicate {
-    Predicate(string, args)
+func pred(_ string: String, _ args: Any?...) -> NSPredicate {
+    NSPredicate(string, args)
 }
