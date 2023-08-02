@@ -1,4 +1,3 @@
-
 # ActiveCoreData
 
 Lightweight Active-record-ish pattern.
@@ -9,13 +8,12 @@ Lightweight Active-record-ish pattern.
 
 👨‍💻 Works with automatic or manual `NSManagedObject` code generation.
 
-# Documentation & Guides
+## Documentation & Guides
 
-[Go to documentation](https://activecoredata.readme.io/)
+**[Go to documentation...](https://activecoredata.readme.io)**
 
-## Todo
-- [x] Unit tests
-- [x] Option to disable automatic saving when using `destroyAll`
-- [x] Add docs on `NSPersistentContainer` agnosticity
-- [ ] Have an idea? Open an issue!
+Includes guides, installation instructions, quick start tutorials, and class reference
+
+## Contributing
+Have an idea? Open an issue!
 
