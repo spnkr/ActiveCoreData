@@ -35,7 +35,7 @@ public extension ManagedObjectFind {
     static func find(column: String, value: Any, context: NSManagedObjectContext) -> Self? {
         
         let request = NSFetchRequest<Self>()
-        request.predicate = Predicate("\(column) = %@", value)
+        request.predicate = NSPredicate("\(column) = %@", value)
         request.fetchLimit = 1
         request.entity = entity()
         

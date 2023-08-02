@@ -1,8 +1,6 @@
 import Foundation
 import CoreData
 
-public typealias Predicate = NSPredicate
-
 public extension NSPredicate {
     /// Create an NSPredicate.
     ///
@@ -22,6 +20,6 @@ public extension NSPredicate {
     /// A predicate that matches every object.
     /// Easier than having to write conditions for 'if the predicate is nil'.
     static func empty() -> NSPredicate {
-        Predicate("1 = 1")
+        NSPredicate("1 = 1")
     }
 }

@@ -129,7 +129,7 @@ final class ContextSynchronizationTests: BaseTestCase {
         japan.addToLanguages(jp1)
         mexico.addToLanguages(es)
         
-        let withSpanishLanguage = Predicate("languages contains %@", es)
+        let withSpanishLanguage = NSPredicate("languages contains %@", es)
         XCTAssertEqual(Country.countFor(withSpanishLanguage), 2)
         XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .background), 0)
         XCTAssertEqual(Country.countFor(withSpanishLanguage, using: .foreground), 2)

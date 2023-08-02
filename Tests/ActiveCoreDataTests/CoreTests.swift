@@ -203,7 +203,7 @@ final class CoreTests: BaseTestCase {
         japan.addToLanguages(jp1)
         mexico.addToLanguages(es)
         
-        let withSpanishLanguage = Predicate("languages contains %@", es)
+        let withSpanishLanguage = NSPredicate("languages contains %@", es)
         XCTAssertEqual(Country.countFor(withSpanishLanguage), 2)
         
         Country.destroyAll(matching: withSpanishLanguage)
@@ -231,17 +231,17 @@ final class CoreTests: BaseTestCase {
         let book2 = Book.findOrCreate(id: "2")
         book2.title = "Book 2"
         
-        let results = Book.searchFor(Predicate("title contains %@", "Book"), context: c)
+        let results = Book.searchFor(NSPredicate("title contains %@", "Book"), context: c)
         XCTAssertEqual(results.count, 2)
         
-        let results2 = Book.searchFor(Predicate("title contains %@", "Book"), limit: 1, using: .foreground)
+        let results2 = Book.searchFor(NSPredicate("title contains %@", "Book"), limit: 1, using: .foreground)
         XCTAssertEqual(results2.count, 1)
         
-        let results3 = Book.searchFor(Predicate("title contains %@", "Book"), sortBy: [SortDescriptor("title")], using: .foreground)
+        let results3 = Book.searchFor(NSPredicate("title contains %@", "Book"), sortBy: [SortDescriptor("title")], using: .foreground)
         XCTAssertEqual(results3.count, 2)
         XCTAssertEqual(results3.first!.title, "Book 1")
         
-        let results4 = Book.searchFor(Predicate("title contains %@", "Book"), sortBy: [NSSortDescriptor(key: "title", ascending: false)], using: .foreground)
+        let results4 = Book.searchFor(NSPredicate("title contains %@", "Book"), sortBy: [NSSortDescriptor(key: "title", ascending: false)], using: .foreground)
         XCTAssertEqual(results4.count, 2)
         XCTAssertEqual(results4.first!.title, "Book 2")
         

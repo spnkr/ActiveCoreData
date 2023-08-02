@@ -26,7 +26,7 @@ public extension ManagedObjectFindOrCreateBy {
     /// Same as `findOrCreate(column: String, value: Any, using: ContextMode = .foreground)`, but allows you to pass your own `NSManagedObjectContext`.
     static func findOrCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self {
         let request = NSFetchRequest<Self>()
-        request.predicate = Predicate("\(column) = %@", value)
+        request.predicate = NSPredicate("\(column) = %@", value)
         request.entity = entity()
         
         do {

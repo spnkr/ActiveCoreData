@@ -7,9 +7,9 @@ public protocol ManagedObjectDeletable {
     /// Removes all objects from the foreground or background context
     static func destroyAll(using: ContextMode)
     /// Removes all objects matching the predicate from the context
-    static func destroyAll(matching: Predicate?, context: NSManagedObjectContext)
+    static func destroyAll(matching: NSPredicate?, context: NSManagedObjectContext)
     /// Removes all objects matching the predicate from the foreground or background context
-    static func destroyAll(matching: Predicate?, using: ContextMode)
+    static func destroyAll(matching: NSPredicate?, using: ContextMode)
 }
 
 public extension ManagedObjectDeletable {
@@ -19,10 +19,10 @@ public extension ManagedObjectDeletable {
     static func destroyAll(using: ContextMode = .foreground) {
         destroyAll(context: contextModeToNSManagedObjectContext(using))
     }
-    static func destroyAll(matching: Predicate? = nil, using: ContextMode = .foreground) {
+    static func destroyAll(matching: NSPredicate? = nil, using: ContextMode = .foreground) {
         destroyAll(matching: matching, context: contextModeToNSManagedObjectContext(using))
     }
-    static func destroyAll(matching: Predicate? = nil, context: NSManagedObjectContext) {
+    static func destroyAll(matching: NSPredicate? = nil, context: NSManagedObjectContext) {
         let request = (self as! NSManagedObject.Type).fetchRequest()
         request.entity = (self as! NSManagedObject.Type).entity()
         
