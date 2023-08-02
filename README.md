@@ -8,6 +8,8 @@ Lightweight Active-record-ish pattern.
 
 👨‍💻 Works with automatic or manual `NSManagedObject` code generation.
 
+🧩 Includes automatic, opt-in, zero-config, management of `NSManagedObjectContext` objects.
+
 ## Documentation & Guides
 
 **[Go to documentation...](https://activecoredata.readme.io)**
