@@ -11,7 +11,7 @@ Lightweight Active-record-ish pattern.
 
 # Documentation & Guides
 
-[Go to documentation](https://coredataplus.readme.io/)
+[Go to documentation](https://activecoredata.readme.io/)
 
 ## Todo
 - [x] Unit tests
