@@ -1,3 +1,4 @@
+cd ~/ActiveCoreData;
 xcodebuild docbuild -scheme ActiveCoreData -derivedDataPath docc -destination 'generic/platform=iOS';
 
 cd ~/Desktop/;
