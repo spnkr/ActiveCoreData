@@ -1,7 +1,6 @@
 
 import Foundation
 import CoreData
-import NotificationCenter
 
 public class ActiveCoreDataStore: CoreDataContainer {
     public static let shared = ActiveCoreDataStore()

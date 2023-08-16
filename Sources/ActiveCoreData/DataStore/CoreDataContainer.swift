@@ -1,10 +1,9 @@
 
 import Foundation
 import CoreData
-import NotificationCenter
 
 public protocol CoreDataContainer {
-    /// Thread safety is up to you
+    /// ActiveCoreDataStore is thread safe. If you implement your own data store, be sure to consider thread safety.
     var viewContext: NSManagedObjectContext { get }
     var backgroundContext: NSManagedObjectContext { get }
 }
