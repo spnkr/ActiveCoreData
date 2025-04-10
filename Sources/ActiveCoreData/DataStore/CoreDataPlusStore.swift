@@ -74,6 +74,7 @@ public class ActiveCoreDataStore: CoreDataContainer {
     public lazy var viewContext: NSManagedObjectContext = {
         let c = persistentContainer.viewContext
         c.automaticallyMergesChangesFromParent = true
+		c.label = "View Context"
         return c
     }()
     
@@ -82,6 +83,7 @@ public class ActiveCoreDataStore: CoreDataContainer {
         let newbackgroundContext = persistentContainer.newBackgroundContext()
         newbackgroundContext.automaticallyMergesChangesFromParent = true
         newbackgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		newbackgroundContext.label = "Background Context"
         return newbackgroundContext
     }()
     

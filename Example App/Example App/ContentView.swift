@@ -22,6 +22,19 @@ struct ContentView: View {
             List {
                 Section(footer: VStack(alignment: .leading) {
                     Spacer()
+					
+					
+					
+					HStack {
+						Image(systemName: "sun.haze.fill")
+						Text("Run experiment").fontWeight(.bold)
+					}
+					.foregroundColor(.pink)
+					.onTapGesture {
+						self.experiment()
+					}
+					Spacer(minLength: 20)
+					
                     HStack {
                         Image(systemName: "plus")
                         Text("Add test data").fontWeight(.bold)
@@ -109,7 +122,59 @@ struct ContentView: View {
         
         .navigationViewStyle(.stack)
     }
-    
+	private func experiment() {
+		Task {
+			
+			await mainDo {
+				let u = Book.findNew(id: "u-main")
+				u?.title = "from main"
+				
+				try! $0.save()
+			}
+		}
+		
+		Task {
+			await backgroundDo {
+				let u = Book.findNew(id: "u-bkg")
+				u?.title = "from background"
+				
+				try! $0.save()
+			}
+		}
+		
+		Task {
+			await backgroundDo { c in
+				let u = Book.findNew(id: "u-5")
+				u?.title = "3. from background"
+				
+				// try $0.save()
+			}
+		}
+		Task {
+			await backgroundDo { c in
+				let u = Book.findNew(id: "u-5")
+				u?.title = "2. from background"
+				
+				// try! $0.save()
+			}
+		}
+		
+		// don't do this:
+		// Task {
+		// 	await backgroundDo {
+		// 		let u = Book.findNew(id: "u-5")
+		// 		u?.title = "3. from background"
+		// 		
+		// 		try! $0.save()
+		// 	}
+		// 	await backgroundDo {
+		// 		let u = Book.findNew(id: "u-5")
+		// 		u?.title = "2. from background"
+		// 		
+		// 		try! $0.save()
+		// 	}
+		// }
+	}
     private func addTestData() {
         
         let background = ActiveCoreData.shared.backgroundContext!
