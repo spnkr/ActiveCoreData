@@ -8,45 +8,45 @@ final class CoreTests: BaseTestCase {
         
         let b = backgroundContext
         let c = viewContext
-        ActiveCoreData.config = ActiveCoreData.Config(viewContext: c)
+        
         
         b.clearAll()
         c.clearAll()
         
-        let book = Book.findOrCreate(column: "title", value: "My Book 1", context: c)
+        let book = Book.find(column: "title", value: "My Book 1", context: c)
         book.id = "2"
         XCTAssertEqual(book.title, "My Book 1")
         
-        let bookAgain = Book.findOrCreate(column: "title", value: "My Book 1", context: c)
+        let bookAgain = Book.find(column: "title", value: "My Book 1", context: c)
         XCTAssertEqual(bookAgain.title, "My Book 1")
         
-        let book2 = Book.findOrCreate(id: "3", context: c)
+        let book2 = Book.find(id: "3", context: c)
         XCTAssertEqual(book2.id, "3")
         
-        let noExist = Book.find(id: "100", context: c)
+        let noExist = Book.load(id: "100", context: c)
         XCTAssertNil(noExist)
         
-        let book100 = Book.findOrCreate(id: "100", context: c)
+        let book100 = Book.find(id: "100", context: c)
         book100.title = "A title"
         
-        let book100bNil = Book.find(id: "100", context: b)
+        let book100bNil = Book.load(id: "100", context: b)
         XCTAssertNil(book100bNil)
         
         try c.save()
         
-        let book100b = Book.findOrCreate(id: "100", context: b)
+        let book100b = Book.find(id: "100", context: b)
         XCTAssertEqual(book100b.title, "A title")
         
-        let doesExist = Book.find(id: "100", context: c)
+        let doesExist = Book.load(id: "100", context: c)
         XCTAssertNotNil(doesExist)
         
-        let noExist2 = Book.find(column: "title", value: "A new book", context: c)
+        let noExist2 = Book.load(column: "title", value: "A new book", context: c)
         XCTAssertNil(noExist2)
         
-        let book200 = Book.findOrCreate(column: "title", value: "A new book", context: c)
+        let book200 = Book.find(column: "title", value: "A new book", context: c)
         book200.id = "5"
         
-        let doesExist2 = Book.find(column: "title", value: "A new book", context: c)
+        let doesExist2 = Book.load(column: "title", value: "A new book", context: c)
         XCTAssertNotNil(doesExist2)
         XCTAssertEqual(doesExist2?.id, "5")
         
@@ -59,56 +59,53 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        ActiveCoreData.config = nil
-        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
-            
-        })
         
         
-        let book = Book.findOrCreate(column: "title", value: "My Book 1")
+        
+        let book = Book.find(column: "title", value: "My Book 1", context: c)
         book.id = "2"
         XCTAssertEqual(book.title, "My Book 1")
         
-        let bookAgain = Book.findOrCreate(column: "title", value: "My Book 1")
+        let bookAgain = Book.find(column: "title", value: "My Book 1", context: c)
         XCTAssertEqual(bookAgain.title, "My Book 1")
         
-        let book2 = Book.findOrCreate(id: "3")
+        let book2 = Book.find(id: "3", context: c)
         XCTAssertEqual(book2.id, "3")
         
-        let noExist = Book.find(id: "100")
+        let noExist = Book.load(id: "100", context: c)
         XCTAssertNil(noExist)
         
-        let book100 = Book.findOrCreate(id: "100")
+        let book100 = Book.find(id: "100", context: c)
         book100.title = "A title"
         
-        let book100bNil = Book.find(id: "100", using: .background)
+		let book100bNil = Book.load(id: "100", context: b)
         XCTAssertNil(book100bNil)
         
         try c.save()
         
-        let book100b = Book.findOrCreate(id: "100", using: .background)
+        let book100b = Book.find(id: "100", context: b)
         XCTAssertEqual(book100b.title, "A title")
         
-        let doesExist = Book.find(id: "100")
+        let doesExist = Book.load(id: "100", context: c)
         XCTAssertNotNil(doesExist)
         
-        let noExist2 = Book.find(column: "title", value: "A new book")
+        let noExist2 = Book.load(column: "title", value: "A new book", context: c)
         XCTAssertNil(noExist2)
         
-        let book200 = Book.findOrCreate(column: "title", value: "A new book")
+        let book200 = Book.find(column: "title", value: "A new book", context: c)
         book200.id = "5"
         
-        let doesExist2 = Book.find(column: "title", value: "A new book")
+        let doesExist2 = Book.load(column: "title", value: "A new book", context: c)
         XCTAssertNotNil(doesExist2)
         XCTAssertEqual(doesExist2?.id, "5")
         
-        let bookB = Book.findOrCreate(column: "title", value: "My Book 1", using: .background)
+        let bookB = Book.find(column: "title", value: "My Book 1", context: b)
         XCTAssertEqual(bookB.managedObjectContext, b)
         
-        let bookF = Book.findOrCreate(column: "title", value: "My Book 1", using: .foreground)
+        let bookF = Book.find(column: "title", value: "My Book 1", context: c)
         XCTAssertEqual(bookF.managedObjectContext, c)
         
-        let bookC = Book.findOrCreate(column: "title", value: "My Book 1", using: .custom(nsManagedObjectContext: c))
+        let bookC = Book.find(column: "title", value: "My Book 1", context: c)
         XCTAssertEqual(bookC.managedObjectContext, c)
         
         XCTAssertEqual(bookF.managedObjectContext, bookC.managedObjectContext)
@@ -123,32 +120,31 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        ActiveCoreData.config = nil
-        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
-            
-        })
+       
         
         Task {
             let book1 = await c.perform({
-                return Book.findOrCreate(id: "2")
+                return Book.find(id: "2")
             })
             XCTAssertEqual(book1.id, "2")
             
             let count = await c.perform {
               // configure a request with NSCountResultTyoe
-                return Book.countFor(.empty())
+                return Book.countFor(.empty(), context: b)
             }
             dump(count)
             
-            let book = await ActiveCoreData.shared.viewContext.perform({
-                return Book.findOrCreate(id: "1")
-            })
-            XCTAssertEqual(book.id, "1")
+			await DB.background.enqueue {
+				let book = Book.find(id: "1", context: $0)
+				XCTAssertEqual(book.id, "1")
+            }
             
-            let book2 = await ActiveCoreData.shared.backgroundContext!.perform({
-                return Book.findOrCreate(id: "10", using: .background)
-            })
-            XCTAssertEqual(book2.id, "10")
+            
+			await DB.background.enqueue {
+				let book = Book.find(id: "10", context: $0)
+				XCTAssertEqual(book.id, "10")
+			}
+			
             
             e.fulfill()
         }
@@ -179,21 +175,21 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        ActiveCoreData.config = nil
-        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
-            
-        })
+        // ActiveCoreData.config = nil
+        // try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        //     
+        // })
         
-        let usa = Country.findOrCreate(id: "1")
-        let japan = Country.findOrCreate(id: "2")
-        let mexico = Country.findOrCreate(id: "3")
+        let usa = Country.find(id: "1")
+        let japan = Country.find(id: "2")
+        let mexico = Country.find(id: "3")
         
-        let nyc = City.findOrCreate(id: "nyc-1", context: c)
-        let tokyo = City.findOrCreate(id: "japan-1", context: c)
+        let nyc = City.find(id: "nyc-1", context: c)
+        let tokyo = City.find(id: "japan-1", context: c)
         
-        let enUS = Language.findOrCreate(column: "langCode", value: "en-us", context: c)
-        let jp1 = Language.findOrCreate(column: "langCode", value: "jp", context: c)
-        let es = Language.findOrCreate(column: "langCode", value: "es", context: c)
+        let enUS = Language.find(column: "langCode", value: "en-us", context: c)
+        let jp1 = Language.find(column: "langCode", value: "jp", context: c)
+        let es = Language.find(column: "langCode", value: "es", context: c)
         
         nyc.country = usa
         tokyo.country = japan
@@ -204,11 +200,11 @@ final class CoreTests: BaseTestCase {
         mexico.addToLanguages(es)
         
         let withSpanishLanguage = NSPredicate("languages contains %@", es)
-        XCTAssertEqual(Country.countFor(withSpanishLanguage), 2)
+		XCTAssertEqual(Country.countFor(withSpanishLanguage, context: b), 2)
         
-        Country.destroyAll(matching: withSpanishLanguage)
+        Country.destroyAll(matching: withSpanishLanguage, context: b)
         
-        XCTAssertEqual(Country.countFor(withSpanishLanguage), 0)
+        XCTAssertEqual(Country.countFor(withSpanishLanguage, context: b), 0)
         
     }
     
@@ -220,28 +216,28 @@ final class CoreTests: BaseTestCase {
         b.clearAll()
         c.clearAll()
         
-        ActiveCoreData.config = nil
-        try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
-            
-        })
+        // ActiveCoreData.config = nil
+        // try! ActiveCoreData.setup(viewContext: c, backgroundContext: b, logHandler: { _ in
+        //     
+        // })
         
-        let book = Book.findOrCreate(id: "1")
+        let book = Book.find(id: "1")
         book.title = "Book 1"
         
-        let book2 = Book.findOrCreate(id: "2")
+        let book2 = Book.find(id: "2")
         book2.title = "Book 2"
         
-        let results = Book.searchFor(NSPredicate("title contains %@", "Book"), context: c)
+        let results = Book.matching(NSPredicate("title contains %@", "Book"), context: c)
         XCTAssertEqual(results.count, 2)
         
-        let results2 = Book.searchFor(NSPredicate("title contains %@", "Book"), limit: 1, using: .foreground)
+        let results2 = Book.matching(NSPredicate("title contains %@", "Book"), limit: 1, context: c)
         XCTAssertEqual(results2.count, 1)
         
-        let results3 = Book.searchFor(NSPredicate("title contains %@", "Book"), sortBy: [SortDescriptor("title")], using: .foreground)
+        let results3 = Book.matching(NSPredicate("title contains %@", "Book"), sortBy: [SortDescriptor("title")], context: c)
         XCTAssertEqual(results3.count, 2)
         XCTAssertEqual(results3.first!.title, "Book 1")
         
-        let results4 = Book.searchFor(NSPredicate("title contains %@", "Book"), sortBy: [NSSortDescriptor(key: "title", ascending: false)], using: .foreground)
+        let results4 = Book.matching(NSPredicate("title contains %@", "Book"), sortBy: [NSSortDescriptor(key: "title", ascending: false)], context: c)
         XCTAssertEqual(results4.count, 2)
         XCTAssertEqual(results4.first!.title, "Book 2")
         
