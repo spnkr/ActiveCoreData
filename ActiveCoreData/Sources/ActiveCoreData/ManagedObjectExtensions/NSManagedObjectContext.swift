@@ -3,7 +3,7 @@ import CoreData
 
 public extension NSManagedObjectContext {
 	/// saves
-	public func flush() {
+	func flush() {
 		// let areTestsRunning = ProcessInfo.processInfo.environment["XCTestSessionIdentifier"] != nil
  
 		// if !areTestsRunning {
@@ -33,7 +33,7 @@ public extension NSManagedObjectContext {
 /// 	// handle the error here
 /// }
 public extension NSManagedObjectContext {
-	public func enqueueThrowing(_ block: @escaping (NSManagedObjectContext) throws -> Void) async throws {
+	func enqueueThrowing(_ block: @escaping (NSManagedObjectContext) throws -> Void) async throws {
 		try await withCheckedThrowingContinuation { continuation in
 			perform {
 				do {
@@ -58,7 +58,7 @@ public extension NSManagedObjectContext {
 public extension NSManagedObjectContext {
 	/// Runs the given block on this context's queue and suspends
 	/// until it completes. Persists *only if* you call `persist()`.
-	public func enqueue(_ block: @escaping (NSManagedObjectContext) -> Void) async {
+	func enqueue(_ block: @escaping (NSManagedObjectContext) -> Void) async {
 		// note:
 		// why withCheckedContinuation + perform? to avoid dealing with new structured concurrency's side effects with regard to .perform
 		// perform(schedule: .enqueued), and perform(schedule: .enqueued) didn't behave like perform—they execute blocks out of order.

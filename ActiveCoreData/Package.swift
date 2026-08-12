@@ -5,7 +5,13 @@ import PackageDescription
 
 let package = Package(
     name: "ActiveCoreData",
-	platforms: [.iOS(.v18)],
+	platforms: [
+		.iOS(.v18),
+		.macOS(.v15),
+		.tvOS(.v18),
+		.watchOS(.v11),
+		.visionOS(.v2),
+	],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -24,7 +30,10 @@ let package = Package(
         ),
         .testTarget(
             name: "ActiveCoreDataTests",
-            dependencies: ["ActiveCoreData"]
+            dependencies: ["ActiveCoreData"],
+			swiftSettings: [
+				.swiftLanguageMode(.v5)
+			]
         ),
     ],
     swiftLanguageModes: [.v6]

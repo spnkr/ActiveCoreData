@@ -11,8 +11,8 @@ public extension ManagedObjectDeletable {
 		_ = destroyAll(matching: nil, context: context)
 	}
 	static func destroyAll(matching: NSPredicate? = nil, context: NSManagedObjectContext) -> Int {
-		assert(context != DataStore.shared.viewContext, "Because destroyAll can write to the database, you must not use the viewContext. Use the background context instead.")
-		
+		assertContextIsWritable(context)
+
 		let request = (self as! NSManagedObject.Type).fetchRequest() // swiftlint:disable:this force_cast
 		request.entity = (self as! NSManagedObject.Type).entity() // swiftlint:disable:this force_cast
 

@@ -17,7 +17,7 @@ public extension ManagedObjectFindOrCreate {
 	///   - value: Value of the primary key.
 	///   - context: NSManagedObjectContext. Required.
 	/// - Returns: An instance of the object
-	public static func findOrCreate(columns: [String], values: [Any], context: NSManagedObjectContext) -> Self {
+	static func findOrCreate(columns: [String], values: [Any], context: NSManagedObjectContext) -> Self {
 		let request = NSFetchRequest<Self>()
 		request.predicate = NSPredicate(format: columns.map({ " \($0) = %@ " }).joined(separator: " AND "), argumentArray: values)
 		request.entity = entity()
@@ -44,13 +44,13 @@ public extension ManagedObjectFindOrCreate {
 		return object
 	}
 
-	public static func findOrCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self {
+	static func findOrCreate(column: String, value: Any, context: NSManagedObjectContext) -> Self {
 		return findOrCreate(columns: [column], values: [value], context: context)
 	}
-	
-	public static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
-		assert(context != DataStore.shared.viewContext, "Because findOrCreate can write to the database, you must not use the viewContext. Use the background context instead.")
-		
+
+	static func findOrCreate(id: String, context: NSManagedObjectContext) -> Self {
+		assertContextIsWritable(context)
+
 		return findOrCreate(columns: ["id"], values: [id], context: context)
 	}
 }
