@@ -15,7 +15,7 @@ struct ManagedObjectFindOrCreateTests {
 
 			#expect(author.name == "Ada")
 			#expect(author.isInserted)
-			#expect(author.managedObjectContext === context)
+			#expect(context.insertedObjects.contains(author))
 			#expect(TestAuthor.countFor(nil, context: context) == 1)
 		}
 	}

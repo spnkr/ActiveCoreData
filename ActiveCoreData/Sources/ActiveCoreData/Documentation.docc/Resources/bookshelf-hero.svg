@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="A shelf of books">
+  <g transform="translate(120 70)">
+    <rect x="0"   y="40"  width="46" height="240" rx="5" fill="#4C8FBF"/>
+    <rect x="56"  y="10"  width="46" height="270" rx="5" fill="#E0A458"/>
+    <rect x="112" y="70"  width="46" height="210" rx="5" fill="#C4626E"/>
+    <rect x="168" y="30"  width="46" height="250" rx="5" fill="#5FA98C"/>
+    <rect x="224" y="90"  width="46" height="190" rx="5" fill="#8C7BB8"/>
+    <rect x="280" y="20"  width="46" height="260" rx="5" fill="#D9784F"/>
+    <rect x="336" y="60"  width="46" height="220" rx="5" fill="#4C8FBF" opacity="0.75"/>
+    <rect x="392" y="45"  width="46" height="235" rx="5" fill="#E0A458" opacity="0.75"/>
+    <rect x="448" y="100" width="46" height="180" rx="5" fill="#5FA98C" opacity="0.75"/>
+    <g fill="#1C1C1E" opacity="0.18">
+      <rect x="8"   y="120" width="30" height="6" rx="3"/>
+      <rect x="64"  y="90"  width="30" height="6" rx="3"/>
+      <rect x="120" y="150" width="30" height="6" rx="3"/>
+      <rect x="176" y="110" width="30" height="6" rx="3"/>
+      <rect x="232" y="170" width="30" height="6" rx="3"/>
+      <rect x="288" y="100" width="30" height="6" rx="3"/>
+      <rect x="344" y="140" width="30" height="6" rx="3"/>
+      <rect x="400" y="125" width="30" height="6" rx="3"/>
+      <rect x="456" y="180" width="30" height="6" rx="3"/>
+    </g>
+    <rect x="-24" y="286" width="566" height="14" rx="7" fill="#8A8A8E"/>
+  </g>
+</svg>

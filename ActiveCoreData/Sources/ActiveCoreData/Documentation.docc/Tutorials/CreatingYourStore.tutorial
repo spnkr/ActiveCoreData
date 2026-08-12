@@ -1,0 +1,197 @@
+@Tutorial(time: 10) {
+    @Intro(title: "Setting up the store") {
+        Core Data does not read your Swift types. It works from a *model*: a file describing your
+        entities, their attributes, and how they relate to each other.
+
+        In this tutorial you will describe a bookshelf, switch on the ActiveCoreData helpers for
+        both entities, and hand SwiftUI a context to read from.
+
+        @Image(source: "chapter-store.svg", alt: "A database.")
+    }
+
+    @Section(title: "Describe your data") {
+        @ContentAndMedia {
+            Create the model and add two entities to it. The code panel shows the file Xcode writes
+            as you go — you will be clicking around the model editor rather than typing this, but
+            it is worth seeing what the editor is actually producing.
+        }
+
+        @Steps {
+            @Step {
+                Create a new app project, add the ActiveCoreData package to it with
+                **File ▸ Add Package Dependencies…**, then choose **File ▸ New ▸ File ▸ Data
+                Model** and name it `Bookshelf`.
+
+                An empty model. ``DataStore`` finds it by name, so as long as your app has exactly
+                one there is nothing else to configure.
+
+                @Code(name: "Bookshelf.xcdatamodeld", file: "model-01.xml")
+            }
+
+            @Step {
+                Add an `Author` entity with a non-optional `id` string and an optional `name`, and
+                a `Book` entity with `id`, `title`, `pages` and `read`.
+
+                Nothing requires an attribute called `id`, but
+                ``ManagedObjectFind/find(id:context:)`` and
+                ``ManagedObjectFindOrCreate/findOrCreate(id:context:)`` look for a `String`
+                attribute with exactly that name — and it gives you `Identifiable` for free, which
+                is what SwiftUI's `List` wants.
+
+                @Code(name: "Bookshelf.xcdatamodeld", file: "model-02.xml")
+            }
+
+            @Step {
+                Add a `books` relationship on `Author` pointing at `Book`, set it to **To Many**,
+                then add an `author` relationship on `Book` pointing back. Set each one's
+                **Inverse** to the other.
+
+                Give `books` the **Cascade** delete rule so removing an author removes their books
+                too. Every relationship should have an inverse: Core Data uses it to keep both
+                sides consistent, so setting `book.author` puts that book in `author.books`
+                immediately.
+
+                @Code(name: "Bookshelf.xcdatamodeld", file: "model-03.xml")
+            }
+
+            @Step {
+                Select the `id` attribute on each entity and tick **Indexed** in the data model
+                inspector.
+
+                You are about to look rows up by `id` constantly. Without an index every lookup is
+                a table scan, and an import loop over a thousand rows is a thousand of them.
+
+                @Code(name: "Bookshelf.xcdatamodeld", file: "model-04.xml")
+            }
+        }
+    }
+
+    @Section(title: "Turn on the helpers") {
+        @ContentAndMedia {
+            Xcode generates an `NSManagedObject` subclass for each entity automatically. You never
+            see the files, but the classes exist and you can extend them.
+        }
+
+        @Steps {
+            @Step {
+                Create a new Swift file called `Model+ActiveCoreData.swift` and import both
+                modules.
+
+                @Code(name: "Model+ActiveCoreData.swift", file: "conform-01.swift")
+            }
+
+            @Step {
+                Conform `Book` to ``ManagedObjectExtended``.
+
+                The extension is empty because there is nothing to implement: every requirement —
+                `init(context:)`, `entity()` and `fetchRequest()` — is already provided by
+                `NSManagedObject`.
+
+                @Code(name: "Model+ActiveCoreData.swift", file: "conform-02.swift")
+            }
+
+            @Step {
+                Do the same for `Author`.
+
+                Both entities now have all five protocols: find, find-or-create, matching, counting
+                and deleting. Conform to the individual protocols instead when an entity should
+                have some but not others — an audit log you can search but never mass-delete, for
+                instance.
+
+                @Code(name: "Model+ActiveCoreData.swift", file: "conform-03.swift")
+            }
+        }
+    }
+
+    @Section(title: "Open the store") {
+        @ContentAndMedia {
+            A *context* is a scratchpad: you fetch objects into it, change them, and save.
+            ``DataStore`` gives you two — one for reading on the main thread, one for writing in
+            the background — and opens the store the first time you touch either.
+        }
+
+        @Steps {
+            @Step {
+                Open your app's entry point.
+
+                @Code(name: "BookshelfApp.swift", file: "app-01.swift")
+            }
+
+            @Step {
+                Put ``DataStore/viewContext`` into the SwiftUI environment.
+
+                That is the whole setup. The store is created lazily, in the standard location, from
+                the model in your bundle — the same `NSPersistentContainer` you would otherwise
+                have written by hand. `@FetchRequest` picks the context up from the environment.
+
+                @Code(name: "BookshelfApp.swift", file: "app-02.swift")
+            }
+        }
+    }
+
+    @Assessments {
+        @MultipleChoice {
+            Why does `Book` need an attribute literally named `id`?
+
+            @Choice(isCorrect: false) {
+                Core Data requires every entity to have a primary key.
+
+                @Justification(reaction: "Not quite.") {
+                    Core Data identifies rows by `NSManagedObjectID`, which it assigns itself. An
+                    `id` attribute is entirely your choice.
+                }
+            }
+
+            @Choice(isCorrect: true) {
+                It is the attribute the `id:` convenience methods look for, and it gives you
+                `Identifiable`.
+
+                @Justification(reaction: "That's right!") {
+                    ``ManagedObjectFind/find(id:context:)`` is shorthand for
+                    `find(column: "id", ...)`. Without the attribute you use the `column:` form
+                    instead, and everything else works the same.
+                }
+            }
+
+            @Choice(isCorrect: false) {
+                `ManagedObjectExtended` will not compile without it.
+
+                @Justification(reaction: "Not quite.") {
+                    The conformance has no requirements of its own — `NSManagedObject` satisfies
+                    all of them. It compiles for any entity.
+                }
+            }
+        }
+
+        @MultipleChoice {
+            What happens if you forget to set a relationship's inverse?
+
+            @Choice(isCorrect: false) {
+                Core Data refuses to load the model.
+
+                @Justification(reaction: "Not quite.") {
+                    It loads. Xcode warns you at build time, and then things go subtly wrong at
+                    runtime.
+                }
+            }
+
+            @Choice(isCorrect: true) {
+                Both sides can drift out of sync, and changes may not be tracked correctly.
+
+                @Justification(reaction: "That's right!") {
+                    Core Data uses the inverse to maintain the other side of a relationship and to
+                    know what changed. Without one, setting `book.author` may leave `author.books`
+                    stale.
+                }
+            }
+
+            @Choice(isCorrect: false) {
+                Nothing — inverses are only needed for CloudKit.
+
+                @Justification(reaction: "Not quite.") {
+                    CloudKit does *require* them, but they matter for a local-only store too.
+                }
+            }
+        }
+    }
+}

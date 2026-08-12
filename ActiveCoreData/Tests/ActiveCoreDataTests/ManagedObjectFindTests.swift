@@ -100,18 +100,20 @@ struct ManagedObjectFindTests {
 	func returnsAnObjectBoundToThePassedContext() {
 		stack.insertAuthor(id: "1", name: "Ada")
 
+		// Asked of the context rather than of the object: `NSManagedObject.managedObjectContext`
+		// is `unowned(unsafe)` and is never safe to read.
 		let viewObjectID = stack.read { context -> NSManagedObjectID? in
-			let author = TestAuthor.find(id: "1", context: context)
-			#expect(author?.managedObjectContext === context)
+			guard let author = TestAuthor.find(id: "1", context: context) else { return nil }
+			#expect(context.registeredObjects.contains(author))
 
-			return author?.objectID
+			return author.objectID
 		}
 
 		let backgroundObjectID = stack.write { context -> NSManagedObjectID? in
-			let author = TestAuthor.find(id: "1", context: context)
-			#expect(author?.managedObjectContext === context)
+			guard let author = TestAuthor.find(id: "1", context: context) else { return nil }
+			#expect(context.registeredObjects.contains(author))
 
-			return author?.objectID
+			return author.objectID
 		}
 
 		#expect(viewObjectID != nil)

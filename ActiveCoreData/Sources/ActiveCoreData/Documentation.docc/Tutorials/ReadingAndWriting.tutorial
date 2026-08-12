@@ -1,0 +1,222 @@
+@Tutorial(time: 15) {
+    @Intro(title: "Reading and writing") {
+        Your store is open and both entities have their helpers. Now put something in it, show it
+        on screen, and take it back out again.
+
+        The rule for everything that follows: read on ``Container/viewContext``, write on
+        ``Container/backgroundContext``.
+
+        @Image(source: "chapter-query.svg", alt: "A magnifying glass over a list of rows.")
+    }
+
+    @Section(title: "Save your first book") {
+        @ContentAndMedia {
+            Writing happens on a background context so a slow save never stutters the frame you are
+            drawing. ``CoreData/NSManagedObjectContext/enqueue(_:)`` is how you get onto that
+            context's queue.
+        }
+
+        @Steps {
+            @Step {
+                Create `BookStore.swift` and reach for the background context.
+
+                ``DataStore/shared`` is `@MainActor`, which is why this function is too. The
+                context object is safe to hold and pass around; what is never safe is *using* it
+                off its own queue.
+
+                @Code(name: "BookStore.swift", file: "write-01.swift")
+            }
+
+            @Step {
+                Wrap the work in ``CoreData/NSManagedObjectContext/enqueue(_:)``.
+
+                The block runs on the context's private queue, and `await` suspends until it
+                finishes. Shadow the outer `context` with the block's parameter, as here — then you
+                cannot accidentally reach for a different context from inside.
+
+                @Code(name: "BookStore.swift", file: "write-02.swift")
+            }
+
+            @Step {
+                Upsert the book with ``ManagedObjectFindOrCreate/findOrCreate(id:context:)``.
+
+                It fetches the book with that ISBN, or inserts a new one with `id` already set. Run
+                this twice with the same ISBN and you still have one book — which is exactly what
+                you want when data arrives from a server that does not know what you already have.
+
+                @Code(name: "BookStore.swift", file: "write-03.swift")
+            }
+
+            @Step {
+                Upsert the author too and join them up.
+
+                Here the key is the author's name rather than an `id`, so use the `column:` form.
+                Assigning `book.author` puts the book into `author.books` at the same time, because
+                you set the inverse in the last tutorial.
+
+                @Code(name: "BookStore.swift", file: "write-04.swift")
+            }
+
+            @Step {
+                Save with ``CoreData/NSManagedObjectContext/flush()``.
+
+                Until you call it, everything lives only in that context. Note that it is one save
+                at the end, not one per object — Core Data batches the whole block into a single
+                transaction, and a thousand small saves cost far more than one large one.
+
+                @Code(name: "BookStore.swift", file: "write-05.swift")
+            }
+        }
+    }
+
+    @Section(title: "Show your shelf") {
+        @ContentAndMedia {
+            Your entities are still ordinary `NSManagedObject`s, so `@FetchRequest` works exactly
+            as it always has — and it keeps itself up to date, which the helpers do not.
+        }
+
+        @Steps {
+            @Step {
+                Start with a plain list.
+
+                @Code(name: "ContentView.swift", file: "list-01.swift")
+            }
+
+            @Step {
+                Add a `@FetchRequest` for every book, sorted by title.
+
+                It finds its context in the SwiftUI environment — the one you put there in the last
+                tutorial.
+
+                @Code(name: "ContentView.swift", file: "list-02.swift")
+            }
+
+            @Step {
+                Show each book and its author.
+
+                `List(books)` works without an explicit `id:` because the `id` attribute gave `Book`
+                its `Identifiable` conformance.
+
+                @Code(name: "ContentView.swift", file: "list-03.swift")
+            }
+
+            @Step {
+                Add a button that calls the function you wrote in the last section.
+
+                Tap it and the row appears. Nothing here observes the store or refreshes anything:
+                ``Container/viewContext`` is created with `automaticallyMergesChangesFromParent`
+                turned on, so the background save reaches it by itself and `@FetchRequest` redraws.
+                Tap the button a second time and no duplicate appears.
+
+                @Code(name: "ContentView.swift", file: "list-04.swift")
+            }
+        }
+    }
+
+    @Section(title: "Search, count and delete") {
+        @ContentAndMedia {
+            Reads are safe on the main thread and none of them throw — a failed fetch gives you
+            `nil`, an empty array, or zero.
+        }
+
+        @Steps {
+            @Step {
+                Add a search using ``ManagedObjectMatching/matching(_:sortBy:limit:context:)``.
+
+                ``Foundation/NSPredicate/init(_:_:)`` substitutes arguments as *values*, never as
+                syntax, so a search term containing a quote, an apostrophe or a literal `%@` is
+                matched as typed. `[cd]` makes the comparison case- and diacritic-insensitive,
+                which is what you want for anything a human typed.
+
+                @Code(name: "BookQueries.swift", file: "query-01.swift")
+            }
+
+            @Step {
+                Count the unread books with ``ManagedObjectCountable/countFor(_:context:)``.
+
+                Always prefer this to `matching(...).count`. Core Data turns it into a
+                `SELECT COUNT(*)`, so no objects are created and counting ten thousand rows costs
+                the same as counting one.
+
+                @Code(name: "BookQueries.swift", file: "query-02.swift")
+            }
+
+            @Step {
+                Clear out the finished books with
+                ``ManagedObjectDeletable/destroyAll(matching:context:)``.
+
+                It returns how many it removed. This one writes, so it goes on the background
+                context — pass it a main-queue context and it asserts in debug builds.
+
+                @Code(name: "BookQueries.swift", file: "query-03.swift")
+            }
+        }
+    }
+
+    @Assessments {
+        @MultipleChoice {
+            You call `Book.findOrCreate(id: "abc", context:)` twice in the same `enqueue` block
+            without saving in between. How many books do you have?
+
+            @Choice(isCorrect: true) {
+                One. The second call finds the object the first one inserted.
+
+                @Justification(reaction: "That's right!") {
+                    A fetch includes pending changes in its own context, so the unsaved insert is
+                    visible. Two *different* contexts doing this before either saves is a different
+                    story — which is why all your writes should go through one background context.
+                }
+            }
+
+            @Choice(isCorrect: false) {
+                Two. The insert is not visible until the context is saved.
+
+                @Justification(reaction: "Not quite.") {
+                    Core Data fetches include pending changes by default.
+                }
+            }
+
+            @Choice(isCorrect: false) {
+                It depends on whether the entity has a uniqueness constraint.
+
+                @Justification(reaction: "Not quite.") {
+                    A constraint would be a second line of defence at save time, but here the fetch
+                    already finds the pending object.
+                }
+            }
+        }
+
+        @MultipleChoice {
+            Your save silently does nothing. What is the most likely cause?
+
+            @Choice(isCorrect: false) {
+                You called ``CoreData/NSManagedObjectContext/flush()`` on the wrong context.
+
+                @Justification(reaction: "Not quite.") {
+                    Possible, but you would usually notice — the changes would not be there to save
+                    in the first place.
+                }
+            }
+
+            @Choice(isCorrect: true) {
+                Validation failed, and ``CoreData/NSManagedObjectContext/flush()`` swallowed the
+                error.
+
+                @Justification(reaction: "That's right!") {
+                    A required attribute left `nil` is the usual culprit. `flush()` ignores the
+                    error and leaves the changes pending. Use
+                    ``CoreData/NSManagedObjectContext/enqueueThrowing(_:)`` with `try context.save()`
+                    whenever the outcome matters.
+                }
+            }
+
+            @Choice(isCorrect: false) {
+                Background contexts cannot write to the store.
+
+                @Justification(reaction: "Not quite.") {
+                    Writing is precisely what they are for.
+                }
+            }
+        }
+    }
+}

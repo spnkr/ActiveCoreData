@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="A database">
+  <g fill="none" stroke="#4C8FBF" stroke-width="12" stroke-linecap="round">
+    <ellipse cx="120" cy="66" rx="72" ry="28"/>
+    <path d="M48 66v52c0 15.5 32.2 28 72 28s72-12.5 72-28V66"/>
+    <path d="M48 118v52c0 15.5 32.2 28 72 28s72-12.5 72-28v-52"/>
+  </g>
+  <circle cx="120" cy="66" r="9" fill="#E0A458"/>
+</svg>

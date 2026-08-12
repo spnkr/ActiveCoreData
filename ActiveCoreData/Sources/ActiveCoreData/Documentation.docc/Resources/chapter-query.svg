@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="A magnifying glass over a list">
+  <g fill="#5FA98C">
+    <rect x="34" y="52"  width="118" height="14" rx="7"/>
+    <rect x="34" y="92"  width="90"  height="14" rx="7"/>
+    <rect x="34" y="132" width="106" height="14" rx="7"/>
+    <rect x="34" y="172" width="70"  height="14" rx="7"/>
+  </g>
+  <g fill="none" stroke="#D9784F" stroke-width="13" stroke-linecap="round">
+    <circle cx="158" cy="146" r="42"/>
+    <path d="M190 178l24 24"/>
+  </g>
+</svg>

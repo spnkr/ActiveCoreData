@@ -1,0 +1,44 @@
+@Tutorials(name: "Bookshelf") {
+    @Intro(title: "Building a bookshelf") {
+        Build a small SwiftUI app that stores books and authors on disk, from an empty project to a
+        list that keeps itself up to date.
+
+        You do not need to know Core Data. Each piece — the model, contexts, saving, fetching — is
+        introduced at the point it starts to matter, and the finished app is about sixty lines of
+        code.
+
+        @Image(source: "bookshelf-hero.svg", alt: "A shelf of colourful books.")
+    }
+
+    @Chapter(name: "Setting up the store") {
+        Describe your data in a Core Data model, switch on the ActiveCoreData helpers with two
+        lines, and give SwiftUI something to read from.
+
+        @Image(source: "chapter-store.svg", alt: "A database.")
+
+        @TutorialReference(tutorial: "doc:CreatingYourStore")
+    }
+
+    @Chapter(name: "Reading and writing") {
+        Save a book in the background, show your shelf in a list, then search it, count it and
+        clear it out.
+
+        @Image(source: "chapter-query.svg", alt: "A magnifying glass over a list of rows.")
+
+        @TutorialReference(tutorial: "doc:ReadingAndWriting")
+    }
+
+    @Resources {
+        Everything else worth reading once the app runs.
+
+        @Documentation(destination: "doc:GettingStarted") {
+            The same ground as these tutorials, written as an article you can skim.
+
+            - <doc:FindingObjects> — predicates, sorting, limits, and which read to reach for.
+            - <doc:SavingChanges> — upserts, deletes, and what to do when a save fails.
+            - <doc:WorkingWithContexts> — the read/write split and the rules about passing objects.
+            - <doc:AdoptingInAnExistingApp> — every helper beside the raw fetch request it replaces.
+            - <doc:UnderTheHood> — faulting, object IDs, indexes, batch requests, CloudKit.
+        }
+    }
+}
